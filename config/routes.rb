@@ -11,12 +11,15 @@ Rails.application.routes.draw do
   devise_for :admin,skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
-  
+
   scope module: :public do
     root to: "homes#top"
     get "about" => "homes#about"
+    resources :users, only: [:show,:edit,:update]
+    get "users/:id/quit" => "users#quit",as: :quit_user
+    patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
   end
-  
+
   namespace :admin do
     get "/" => "homes#top"
   end

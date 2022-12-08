@@ -1,0 +1,19 @@
+<div class='container px-5 px-sm-0 mt-5'>
+  <div class='row'>
+    <div class='col-md-10 mt-4 text-center'>
+    <h2 >本当に退会しますか?</h2>
+    </div>
+
+    <div class='col-md-10 mt-2 text-center'>
+     <p>
+       退会すると、$$$$$$$$</br>
+       $$$$$$$$$$$$$$<br>
+       退会する場合は、「退会する」をクリックしてください。
+     </p>
+     </div>
+     <div class='col-md-10 mt-2 text-center'>
+    <%= link_to "退会しない",user_path %>
+    <%= link_to "退会する", withdraw_user_path,method: :patch,data: {confirm: '本当に退会しますか？'} %>
+    </div>
+  </div>
+</div>
