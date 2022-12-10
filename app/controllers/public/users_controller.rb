@@ -24,6 +24,9 @@ class Public::UsersController < ApplicationController
 
   def withdraw
     ensure_correct_user
+    @user.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
   end
 
   private
@@ -34,8 +37,8 @@ class Public::UsersController < ApplicationController
 
   def ensure_correct_user
     @user = User.find(params[:id])
-    unless @user == current_user
+    unless  @user == current_user
       redirect_to user_path(current_user)
     end
   end
-end
+ end
