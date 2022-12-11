@@ -9,7 +9,7 @@ class Public::PostsController < ApplicationController
   
   def create
     post =current_user.posts.new(post_params)
-     if post.save
+    if post.save
       redirect_to post_path(post)
     else
       render :new
@@ -37,6 +37,12 @@ class Public::PostsController < ApplicationController
     post = Post.find(params[:id])
     post.destroy
     redirect_to posts_path
+  end
+  
+  def tag
+    @user = current_user
+    @tag = Tag.find_by(name: params[:name])
+    @posts = @tag.posts
   end
   
   private
