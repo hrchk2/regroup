@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get "users/:id/quit" => "users#quit",as: :quit_user
     patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
     resources :posts, only: [:new,:index,:create,:show,:edit,:update,:destroy]
+    get "posts/tag/:name",to: "posts#tag"
   end
 
   namespace :admin do
