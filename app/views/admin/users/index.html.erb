@@ -1,0 +1,21 @@
+<h1>user.index</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>メールアドレス</th>
+      <th>退会状況</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td> <%= link_to user.name ,admin_user_path(user) %></td>
+        <td> <%= user.email %></td>
+        <td><%= user.is_deleted %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
