@@ -1,0 +1,35 @@
+<h1>post.show</h1>
+
+<h2>登録情報 <%= link_to "編集する",edit_post_path(@post)%></h2>
+
+<ul>
+    <li>
+        <p>title</p>
+        <%= @post.title %>
+    </li>
+    
+    <li>
+        <p>body</p>
+        <%= render_with_hashtags(@post.body) %>
+    </li>
+    
+    <li>
+        <p>人数</p>
+        <%= @post.capacity %>
+    </li>
+    
+    <li>
+        <p>公開ステータス</p>
+        <%= @post.status %>
+    </li>
+    
+    <li>
+        <p>自由参加型</p>
+        <%= @post.is_free %>
+    </li>
+    
+    <li>
+        <p>募集状況</p>
+        <%= @post.is_stop %>
+    </li>
+</ul>

@@ -1,0 +1,18 @@
+<h1>プロフィールを編集</h1>
+
+<%= form_with model: @user,url: user_path(@user), local:true do |f| %>
+ <%= f.label:name,"名前" %>
+ <%= f.text_field :name %>
+
+ <%= f.label :image,"プロフィール" %>
+ <%= f.file_field :profile_image, class: "form-control-file user_image", accept: 'image/*' %>
+
+ <%= f.label :introduction,"自己紹介" %>
+ <%= f.text_area :introduction %>
+
+ <%= f.label :email,"メールアドレス" %>
+ <%= f.email_field :email %>
+
+<%= f.submit "編集内容を保存" %>
+<%= link_to "退会する", quit_user_path %>
+<% end %>

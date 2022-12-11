@@ -11,14 +11,20 @@ Rails.application.routes.draw do
   devise_for :admin,skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
-  
+
   scope module: :public do
     root to: "homes#top"
     get "about" => "homes#about"
+    resources :users, only: [:show,:edit,:update]
+    get "users/:id/quit" => "users#quit",as: :quit_user
+    patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
+    resources :posts, only: [:new,:index,:create,:show,:edit,:update,:destroy]
+    get "posts/tag/:name",to: "posts#tag"
   end
-  
+
   namespace :admin do
     get "/" => "homes#top"
+    resources :users, only: [:index,:show,:edit,:update]
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

@@ -1,0 +1,27 @@
+<h1>プロフィールを編集</h1>
+
+<%= form_with model: @user,url: admin_user_path(@user), local:true do |f| %>
+ <%= f.label:name,"名前" %>
+ <%= @user.name %>
+
+ <%= f.label :image,"プロフィール" %>
+<%= image_tag @user.get_profile_image, size:'100x100' %>
+
+ <%= f.label :introduction,"自己紹介" %>
+ <%= @user.introduction %>
+
+ <%= f.label :email,"メールアドレス" %>
+<%= @user.email %>
+
+  <div class="form-group">
+      <%= f.label :"退会ステータス"%>
+    <div class="form-check">
+      <%= f.radio_button :is_deleted, false %>
+      <%= f.label :is_stop_false, "有効" %>
+      <%= f.radio_button :is_deleted, true %>
+      <%= f.label :is_deleted_true, "退会" %>
+    </div>
+  </div>
+ 
+<%= f.submit "編集内容を保存" %>
+<% end %>
