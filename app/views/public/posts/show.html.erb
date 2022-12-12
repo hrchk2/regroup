@@ -7,44 +7,34 @@
         <p>title</p>
         <%= @post.title %>
     </li>
-    
+
     <li>
         <p>body</p>
         <%= render_with_hashtags(@post.body) %>
     </li>
-    
+
     <li>
         <p>人数</p>
         <%= @post.capacity %>
     </li>
-    
+
     <li>
         <p>公開ステータス</p>
         <%= @post.status %>
     </li>
-    
+
     <li>
         <p>自由参加型</p>
         <%= @post.is_free %>
     </li>
-    
+
     <li>
         <p>募集状況</p>
         <%= @post.is_stop %>
     </li>
-    
-   <% if @post.favorited_by?(current_user) %>
 
-   <%= link_to post_favorites_path(@post), method: :DELETE do %>
-   ♥<%= @post.favorites.count %>
-   <% end %>
+   <li id="post_<%= @post.id %>">
+       <%= render "public/favorites/favorite", post: @post %>
+   </li>
 
-   <% else %>
-
-    <%= link_to post_favorites_path(@post), method: :post do %>
-     ♡<%= @post.favorites.count %>
-     <% end %>
-
-  <% end %>
-    
 </ul>

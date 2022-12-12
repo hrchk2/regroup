@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
     get "about" => "homes#about"
-    resources :users, only: [:show,:edit,:update]
+    resources :users, only: [:show,:edit,:update] do
+        member do
+        get :favorites
+        end
+    end
     get "users/:id/quit" => "users#quit",as: :quit_user
     patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
     resources :posts, only: [:new,:index,:create,:show,:edit,:update,:destroy] do
