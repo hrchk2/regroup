@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
     resources :posts, only: [:new,:index,:create,:show,:edit,:update,:destroy] do
       resource:favorites,only:[:create,:destroy]
+      resources:comments,only: [:create,:destroy]
     end
     get "posts/tag/:name",to: "posts#tag"
   end

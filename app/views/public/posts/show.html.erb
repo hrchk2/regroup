@@ -38,3 +38,10 @@
    </li>
 
 </ul>
+<div id="comments_form">
+  <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+</div>
+
+<div id="comments_ajax">
+  <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
+</div>
