@@ -18,7 +18,9 @@ Rails.application.routes.draw do
     resources :users, only: [:show,:edit,:update]
     get "users/:id/quit" => "users#quit",as: :quit_user
     patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
-    resources :posts, only: [:new,:index,:create,:show,:edit,:update,:destroy]
+    resources :posts, only: [:new,:index,:create,:show,:edit,:update,:destroy] do
+      resource:favorites,only:[:create,:destroy]
+    end
     get "posts/tag/:name",to: "posts#tag"
   end
 
