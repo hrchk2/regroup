@@ -19,6 +19,9 @@ Rails.application.routes.draw do
         member do
         get :favorites
         end
+        resource :relationships, only: [:create, :destroy]
+        get "following" => "relationships#following"
+        get "followers" => "relationships#followers"
     end
     get "users/:id/quit" => "users#quit",as: :quit_user
     patch "users/:id/withdraw" => "users#withdraw",as: :withdraw_user
