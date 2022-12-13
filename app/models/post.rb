@@ -1,9 +1,11 @@
 class Post < ApplicationRecord
 
   belongs_to :user
-  has_many :post_tags
+  has_many :post_tags, dependent: :destroy
   has_many :tags ,through: :post_tags
-  
+  has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
 
   enum status: { "公開": 0, "下書き": 1 }
 
@@ -13,7 +15,7 @@ class Post < ApplicationRecord
     post.tags = []
     tags.uniq.map do |tag|
       #ハッシュタグは先頭の'#'を外した上で保存
-      hashtag = Tag.find_or_create_by(name: tag.downcase.delete('#'))
+      hashtag = Tag.find_or_create_by(name: tag.downcase.delete('#').delete('＃'))
     post.tags << hashtag
     end
   end
@@ -23,8 +25,13 @@ class Post < ApplicationRecord
     post.tags.clear
     tags = self.caption.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
     tags.uniq.map do |tag|
-      tag = Tag.find_or_create_by(name: tag.downcase.delete('#'))
-      post.tags << tag
+      hashtag = Tag.find_or_create_by(name: tag.downcase.delete('#').delete('＃'))
+      post.tags << hashtag
     end
+  end
+  
+  # userがいいねしているかどうか判定
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
   end
 end

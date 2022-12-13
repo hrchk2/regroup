@@ -8,3 +8,16 @@
 
 <%= @user.introduction %>
 
+<div id="following-count_<% @user.id %>">
+  <%= link_to "#{ @user.following.count }フォロー中", user_following_path(@user) %>
+</div>
+
+<div id="followers-count_<%= @user.id %>">
+  <%= link_to "#{ @user.followers.count }フォロワー", user_followers_path(@user) %>
+</div>
+
+<div id="follow-btn_<%= @user.id %>">
+  <%= render partial:"public/relationships/follow-btn", locals: {user: @user} %>
+</div>
+
+<p><%=link_to"お気に入り記事",favorites_user_path(@user) %></p>

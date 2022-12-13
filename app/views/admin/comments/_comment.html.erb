@@ -1,0 +1,18 @@
+<h5>コメント一覧</h5>
+<table>
+  <thead>
+    <tr>
+      <th>コメント投稿者</th>
+      <th>コメント内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% comments.each do |comment| %>
+      <tr>
+        <td><%= comment.user.name %></td>
+        <td><%= comment.body %></td>
+        <td><%= link_to "削除", admin_post_comment_path(post,comment), method: :delete,remote: true %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

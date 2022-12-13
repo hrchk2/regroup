@@ -1,0 +1,7 @@
+<h5>コメント欄</h5>
+<%= form_with model: [post,comment], local: false do |f| %>
+  <%= f.hidden_field :post_id, :value => post.id %>
+  <%= f.text_area :body, size: "40x5" %>
+  <%= f.submit '送信', class: "btn-sm btn-primary" %>
+<% end %>
+

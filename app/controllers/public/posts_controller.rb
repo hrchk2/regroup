@@ -18,6 +18,8 @@ class Public::PostsController < ApplicationController
   
   def show
     @post =Post.find(params[:id])
+    @comments = @post.comments
+    @comment = current_user.comments.new
   end
   
   def edit
@@ -42,7 +44,11 @@ class Public::PostsController < ApplicationController
   def tag
     @user = current_user
     @tag = Tag.find_by(name: params[:name])
-    @posts = @tag.posts
+    # tagを削除すると検索時エラーがかかるのでかわりのif文
+    if @tag
+       @posts = @tag.posts
+    else
+    end
   end
   
   private

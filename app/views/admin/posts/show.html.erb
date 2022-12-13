@@ -1,6 +1,6 @@
 <h1>post.show</h1>
 
-<h2>登録情報 <%= link_to "編集する",edit_post_path(@post)%></h2>
+<h2>登録情報</h2>
 
 <ul>
     <li>
@@ -32,16 +32,14 @@
         <p>募集状況</p>
         <%= @post.is_stop %>
     </li>
-
-   <li id="post_<%= @post.id %>">
-       <%= render "public/favorites/favorite", post: @post %>
+   <li>
+      いいね数<%= @post.favorites.count %>
    </li>
 
 </ul>
-<div id="comments_form">
-  <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+
+<div id="admin_comments_ajax">
+  <%= render partial:"admin/comments/comment", locals: {post: @post,comments: @comments} %>
 </div>
 
-<div id="comments_ajax">
-  <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
-</div>
+<%= link_to "投稿削除",admin_post_path(@post),method: :delete,data: {confirm: '本当に消しますか？'}%>
