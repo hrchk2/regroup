@@ -1,0 +1,19 @@
+
+<h1>tags.index</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>名前</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+      <tr>
+        <td> <%= tag.name %></td>
+        <td><%= link_to"削除",admin_tag_path(tag),method: :delete %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+

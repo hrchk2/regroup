@@ -1,3 +1,6 @@
+<% if @tag.blank? %>
+<h2>お探しのハッシュタグは管理者によって削除されました</h2>
+<% else %>
 <h2>ハッシュタグ #<%= @tag.name %></h2>
 <table>
   <thead>
@@ -25,3 +28,4 @@
   <% end %>
   </tbody>
 </table>
+<% end %>

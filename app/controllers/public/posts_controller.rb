@@ -44,7 +44,11 @@ class Public::PostsController < ApplicationController
   def tag
     @user = current_user
     @tag = Tag.find_by(name: params[:name])
-    @posts = @tag.posts
+    if @tag
+       @posts = @tag.posts
+    else
+       
+    end
   end
   
   private
