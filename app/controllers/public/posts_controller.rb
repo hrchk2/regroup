@@ -44,10 +44,10 @@ class Public::PostsController < ApplicationController
   def tag
     @user = current_user
     @tag = Tag.find_by(name: params[:name])
+    # tagを削除すると検索時エラーがかかるのでかわりのif文
     if @tag
        @posts = @tag.posts
     else
-       
     end
   end
   
