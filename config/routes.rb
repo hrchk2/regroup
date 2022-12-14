@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       resources:comments,only: [:create,:destroy]
     end
     get "posts/tag/:name",to: "posts#tag"
+    resources :messages, only: [:create]
+    resources :rooms, only: [:create,:show,:index]
   end
 
   namespace :admin do
