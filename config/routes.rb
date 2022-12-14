@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     get "posts/tag/:name",to: "posts#tag"
     resources :messages, only: [:create]
     resources :rooms, only: [:create,:show,:index]
+    get "search" => "searches#search"
   end
 
   namespace :admin do
@@ -45,6 +46,7 @@ Rails.application.routes.draw do
       resources:comments, only: [:destroy]
     end
     resources :tags, only: [:index,:destroy]
+     get "search" => "searches#search"
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
