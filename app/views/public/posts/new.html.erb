@@ -1,38 +1,61 @@
-<h1>post.new</h1>
-
-<%= form_with model:@post,local:true do |f| %>
-  <div class="form-group">
-    <%= f.label :title,"タイトル" %>
-    <%= f.text_field :title%>
-  </div>
-  <div class="form-group">
-    <%= f.label :body,"内容" %>
-    <%= f.text_area :body %>
-  </div>
-  <div class="form-group">
-    <%= f.label :capacity,"参加人数" %>
-    <%= f.select :capacity, capacity_select %>
-  </div>
-  <div class="form-group">
-      <%= f.label :"参加設定", class: "col-sm-4" %>
-    <div class="form-check">
-      <%= f.radio_button :is_free, true %>
-      <%= f.label :is_free_true, "自由参加可" %>
-      <%= f.radio_button :is_free, false%>
-      <%= f.label :is_free_false, "オーナー承認制"%>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center mt-3">
+      <h1>新規投稿</h1>
     </div>
   </div>
-    <div class="form-group">
-      <%= f.label :"公開範囲", class: "col-sm-4" %>
-    <div class="form-check">
-      <%= f.radio_button :status, Post.statuses.key(0) %>
-      <%= f.label :status_公開, "公開"%>
-      <%= f.radio_button :status,Post.statuses.key(1) %>
-      <%= f.label :status_下書き, "下書き"  %>
+  
+    <%= form_with model:@post,local:true do |f| %>
+      <div class="row">
+        <div class="col-5 form-group">
+          <%= f.label :title,"タイトル"%>
+          <%= f.text_field :title,class:"form-control" %>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-11">
+          <%= f.label :body,"募集内容" %>
+          <%= f.text_area :body,class:"form-control",rows: 13 %>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-5">
+          <%= f.label :capacity,"参加人数" %>
+          <%= f.select :capacity, capacity_select %>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-5">
+            <%= f.label :"参加設定" %>
+          <div class="form-check">
+            <%= f.radio_button :is_free, true %>
+            <%= f.label :is_free_true, "自由参加" %>
+            <%= f.radio_button :is_free, false%>
+            <%= f.label :is_free_false, "オーナー承認制"%>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-5">
+            <%= f.label :"公開範囲" %>
+          <div class="form-check">
+            <%= f.radio_button :status, Post.statuses.key(0) %>
+            <%= f.label :status_公開, "公開"%>
+            <%= f.radio_button :status,Post.statuses.key(1) %>
+            <%= f.label :status_下書き, "下書き"  %>
+          </div>
+        </div>
+      </div>
+
+        <div class="form-group d-flex justify-content-center">
+          <%= f.submit class: 'btn btn-success btn-lg btn-block' %>
+        </div>
+      <% end %>
+
     </div>
   </div>
-
-  <div class="form-group">
-    <%= f.submit class: 'btn btn-success' %>
-  </div>
-<% end %>
+</div>

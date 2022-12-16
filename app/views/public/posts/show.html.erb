@@ -1,47 +1,63 @@
-<h1>post.show</h1>
+<div class="container">
+  <div class="row mt-3">
+      <div class="col-6 offset-2 d-flex align-items-center ">
+        <h1><%= @post.title %></h1>
+        <% if @post.user == current_user %>
+          <h2>
+            <%= link_to edit_post_path(@post),class:"text-muted" do%>
+             <i class="far fa-edit fa-xs ml-5"></i>
+             <% end %>
+          </h2>
+          <% else %>
+           <h2 id="post_<%= @post.id %>">
+               <%= render "public/favorites/favorite", post: @post%>
+           </h2>
+        <% end %>
+      </div>
+  </div>
+  
+  <div class="row mt-3">
+    <ul>
+        <li>
+            <p>title</p>
+            <%= @post.title %>
+        </li>
 
-<h2>登録情報 <%= link_to "編集する",edit_post_path(@post)%></h2>
+        <li>
+            <p>body</p>
+            <%= render_with_hashtags(@post.body) %>
+        </li>
 
-<ul>
-    <li>
-        <p>title</p>
-        <%= @post.title %>
-    </li>
+        <li>
+            <p>人数</p>
+            <%= @post.capacity %>
+        </li>
 
-    <li>
-        <p>body</p>
-        <%= render_with_hashtags(@post.body) %>
-    </li>
+        <li>
+            <p>公開ステータス</p>
+            <%= @post.status %>
+        </li>
 
-    <li>
-        <p>人数</p>
-        <%= @post.capacity %>
-    </li>
+        <li>
+            <p>自由参加型</p>
+            <%= @post.is_free %>
+        </li>
 
-    <li>
-        <p>公開ステータス</p>
-        <%= @post.status %>
-    </li>
+        <li>
+            <p>募集状況</p>
+            <%= @post.is_stop %>
+        </li>
+  </div>
 
-    <li>
-        <p>自由参加型</p>
-        <%= @post.is_free %>
-    </li>
+    </ul>
+    <div id="comments_form">
+      <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+    </div>
 
-    <li>
-        <p>募集状況</p>
-        <%= @post.is_stop %>
-    </li>
-
-   <li id="post_<%= @post.id %>">
-       <%= render "public/favorites/favorite", post: @post %>
-   </li>
-
-</ul>
-<div id="comments_form">
-  <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+    <div id="comments_ajax">
+      <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
+    </div>
 </div>
 
-<div id="comments_ajax">
-  <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
+
 </div>
