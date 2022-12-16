@@ -17,47 +17,75 @@
   </div>
   
   <div class="row mt-3">
-    <ul>
-        <li>
-            <p>title</p>
-            <%= @post.title %>
-        </li>
-
-        <li>
-            <p>body</p>
-            <%= render_with_hashtags(@post.body) %>
-        </li>
-
-        <li>
-            <p>人数</p>
-            <%= @post.capacity %>
-        </li>
-
-        <li>
+      <table class="table table-bordered col-6 offset-2 text-center ">
+        <thead>
+          <tr>
+            <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+            <td colspan="2" >
+              <%= image_tag @post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+              <%= @post.user.name %>
+            </td>
+          </tr>
+        <thead>
+          <tr>
+            <th scope="col">募集人数</th>
+            <th scope="col">参加型</th>
+            <th scope="col">募集状況</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/<%= @post.capacity %>人</td>
+            
+            <!--自由参加または承認制のif文-->
+            <% if @post.is_free? %>
+              <td class="text-primary">自由参加</td>
+                <% else %>
+              <td class="text-waring">オーナー承認制</td>
+            <% end %>
+            
+            <!--募集関係　if-->
+            <% if @post.is_stop? %>
+              <td class="text-danger">募集停止</td>
+                <% else %>
+              <td class="text-success">募集中</td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="col-6 offset-2 text-center border border-primary">
+        <%= render_with_hashtags(@post.body) %>
+      </div>
+      
+      
+      
+      
+  </div>
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
             <p>公開ステータス</p>
             <%= @post.status %>
-        </li>
-
-        <li>
-            <p>自由参加型</p>
-            <%= @post.is_free %>
-        </li>
-
-        <li>
-            <p>募集状況</p>
-            <%= @post.is_stop %>
-        </li>
-  </div>
-
-    </ul>
-    <div id="comments_form">
-      <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
-    </div>
-
-    <div id="comments_ajax">
-      <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
-    </div>
-</div>
+              
+                <div id="comments_form">
+                  <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+                </div>
+            
+                <div id="comments_ajax">
+                  <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
+                </div>
 
 
 </div>
