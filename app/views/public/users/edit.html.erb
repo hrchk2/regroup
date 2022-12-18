@@ -1,18 +1,38 @@
-<h1>プロフィールを編集</h1>
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-6 offset-2">
+      <h1>投稿編集</h1>
 
-<%= form_with model: @user,url: user_path(@user), local:true do |f| %>
- <%= f.label:name,"名前" %>
- <%= f.text_field :name %>
+    <%= form_with model: @user,url: user_path(@user), local:true do |f| %>
+      <div class="form-group">
+       <%= f.label:name,"名前" %>
+       <%= f.text_field :name,class:"form-control" %>
+      </div>
 
- <%= f.label :image,"プロフィール" %>
- <%= f.file_field :profile_image, class: "form-control-file user_image", accept: 'image/*' %>
+      <div class="form-group">
+       <%= f.label :image,"プロフィール" %>
+       <%= f.file_field :profile_image, class: "form-control-file user_image", accept: 'image/*' %>
+      </div>
 
- <%= f.label :introduction,"自己紹介" %>
- <%= f.text_area :introduction %>
+      <div class="form-group">
+       <%= f.label :introduction,"自己紹介" %>
+       <%= f.text_area :introduction,class:"form-control" %>
+      </div>
 
- <%= f.label :email,"メールアドレス" %>
- <%= f.email_field :email %>
+      <div class="form-group">
+       <%= f.label :email,"メールアドレス" %>
+       <%= f.email_field :email,class:"form-control" %>
+      </div>
 
-<%= f.submit "編集内容を保存" %>
-<%= link_to "退会する", quit_user_path %>
-<% end %>
+      <div class="form-group">
+      <%= f.submit "編集内容を保存",class: 'btn btn-success btn-lg btn-block' %>
+      </div>
+    <% end %>
+
+    <div class="quit text-right">
+       <%= link_to "※退会はこちらから", quit_user_path , class:"text-danger" %>
+    </div>
+
+   </div>
+  </div>
+</div>
