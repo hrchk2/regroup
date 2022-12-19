@@ -3,7 +3,7 @@ class CreateParticipants < ActiveRecord::Migration[6.1]
     create_table :participants do |t|
       t.integer:user_id,null: false
       t.integer:post_id,null: false
-      t.integer:approval_status,null: false,default: 
+      t.integer:approval_status,null: false,default: 0
 
       t.timestamps
     end
