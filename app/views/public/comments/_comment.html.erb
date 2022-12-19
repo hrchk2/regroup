@@ -1,18 +1,22 @@
-<h5>コメント一覧</h5>
-<table>
-  <thead>
-    <tr>
-      <th>コメント投稿者</th>
-      <th>コメント内容</th>
-    </tr>
-  </thead>
-  <tbody>
+ <div class="col-6 offset-2 border border-primary">
+  <h4>コメント欄</h4>
     <% comments.each do |comment| %>
-      <tr>
-        <td><%= comment.user.name %></td>
-        <td><%= comment.body %></td>
-        <td><%= link_to "削除", post_comment_path(post, comment), remote: true, method: :delete %></td>
-      </tr>
+      <div class="d-flex mt-2 align-items-center">
+        <%= link_to user_path(comment.user) do %>
+          <%= image_tag comment.user.get_profile_image,size:"30x30",class:"rounded-circle mr-3" %>
+          <p><%= comment.user.name %></p>
+        <% end %>
+        
+        <p><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
+        <p class="ml-5"><%= comment.body %></p>
+
+        <p class="ml-auto">
+          <% if (current_user == comment.user) ||  %>
+            <%= link_to post_comment_path(post,comment), method: :delete, remote: true,class: "btn btn-sm btn-danger" do %>
+              <i class="fas fa-trash-alt "></i>
+            <% end %>
+          <% end %>
+        </p>
+      </div>
     <% end %>
-  </tbody>
-</table>
+</div>

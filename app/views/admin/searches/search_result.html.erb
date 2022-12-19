@@ -1,0 +1,24 @@
+<h2>admin Results index</h2>
+
+<table class="table table-hover table-inverse">
+  <!--検索対象モデルがtagの時 -->
+  <% if @range == "Tag" %>
+    <tbody>
+      <% @tags.each do |tag| %>
+        <tr>
+          <td><%= tag.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <!--検索対象モデルがUserではない時(= 検索対象モデルがpostの時) -->
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= link_to post.title, admin_post_path(post) %></td>
+          <td><%= post.body %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

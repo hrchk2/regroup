@@ -16,6 +16,9 @@ class User < ApplicationRecord
   has_many :following, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :following
   
+  has_many :messages, dependent: :destroy
+  has_many :entries, dependent: :destroy
+  
   has_one_attached :profile_image
   
   def get_profile_image
@@ -35,5 +38,11 @@ class User < ApplicationRecord
     following.include?(user)
   end
 
-  
+  # ゲストユーザー
+  def self.guest
+    find_or_create_by!(name: 'guestuser' ,email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+    end
+  end
 end

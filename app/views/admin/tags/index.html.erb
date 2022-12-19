@@ -1,19 +1,30 @@
-
-<h1>tags.index</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>名前</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tags.each do |tag| %>
-      <tr>
-        <td> <%= tag.name %></td>
-        <td><%= link_to"削除",admin_tag_path(tag),method: :delete %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-6 offset-2 mt-3 mb-2 ">
+        <h1>タグ一覧</h1>
+        
+      <table class='table table-hover shadow-lg mt-3 text-center '>
+        <thead class="bg-light">
+          <tr>
+            <th>タグ名</th>
+            <th>タグ付き投稿数</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="border-bottom">
+          <% @tags.each do |tag| %>
+            <tr>
+              <td><%= tag.name %></td>
+              <td><%= tag.posts.count %></td>
+              <td><%= link_to admin_tag_path(tag),method: :delete,class: "btn btn-sm btn-danger" do%>
+                  <i class="fas fa-trash-alt "></i>
+                  <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+        
+    </div>
+  </div>
+</diV>

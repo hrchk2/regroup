@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
+  
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  end
 
   # 管理者用
   # URL /admin/sign_in ...
@@ -30,6 +34,9 @@ Rails.application.routes.draw do
       resources:comments,only: [:create,:destroy]
     end
     get "posts/tag/:name",to: "posts#tag"
+    resources :messages, only: [:create]
+    resources :rooms, only: [:create,:show,:index]
+    get "search" => "searches#search"
   end
 
   namespace :admin do
@@ -39,7 +46,8 @@ Rails.application.routes.draw do
       resources:comments, only: [:destroy]
     end
     resources :tags, only: [:index,:destroy]
+    get "search" => "searches#search"
   end
-
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

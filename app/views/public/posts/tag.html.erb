@@ -1,31 +1,80 @@
 <% if @tag.blank? %>
-<h2>お探しのハッシュタグは管理者によって削除されました</h2>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-6 offset-2 mt-3 mb-2 text-center">
+          <h3>お探しのハッシュタグは、存在しないか</br>
+              管理者によって削除されました。
+          </h3>
+          <%= link_to "一覧に戻る",posts_path,class:"text-danger" %>
+      </div>
+    </div>
+  </div>
+
 <% else %>
-<h2>ハッシュタグ #<%= @tag.name %></h2>
-<table>
-  <thead>
-    <tr>
-      <th>オーナー</th>
-      <th>Title</th>
-      <th>body</th>
-      <th>人数</th>
-      <th>ステータス</th>
-      <th>自由型or承認型</th>
-      <th>募集状況</th>
-    </tr>
-  </thead>
-  <tbody>
+
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-6 offset-2 mt-3 mb-2 ">
+          <h1>#<%= @tag.name %></h1>
+      </div>
+    </div>
+
+  <div class="row mt-2">
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.user.name %></td>
-        <td> <%= link_to post.title,post_path(post) %></td>
-        <td> <%= post.body %></td>
-        <td><%= post.capacity %></td>
-        <td><%= post.status %></td>
-        <td><%= post.is_free %></td>
-        <td><%= post.is_stop %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+      <table class="table table-bordered col-6 offset-2 text-center">
+          <thead>
+            <tr>
+              <th colspan="3">
+                <%=link_to post.title,post_path(post),class:"text-dark" %>
+
+                <!--付いているタグのeach-->
+                <% post.tags.each do |tag| %>
+                  #<%= tag.name %></p>
+                <% end %>
+
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+              <td colspan="2" >
+                <%= link_to user_path(post.user) do %>
+                  <%= image_tag post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+                  <%= post.user.name %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <th scope="col">募集人数</th>
+              <th scope="col">参加型</th>
+              <th scope="col">募集状況</th>
+            </tr>
+          </body>
+          <tbody>
+            <tr>
+              <td>/<%= post.capacity %>人</td>
+
+              <!--自由参加または承認制のif文-->
+              <% if post.is_free? %>
+                <td class="text-primary">自由参加</td>
+                  <% else %>
+                <td class="text-waring">オーナー承認制</td>
+              <% end %>
+
+              <!--募集関係　if-->
+              <% if post.is_stop? %>
+                <td class="text-danger">募集停止</td>
+                  <% else %>
+                <td class="text-success">募集中</td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+  </div>
+</div>
+
 <% end %>
