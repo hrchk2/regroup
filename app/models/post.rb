@@ -23,7 +23,7 @@ class Post < ApplicationRecord
   before_update do
     post = Post.find_by(id: self.id)
     post.tags.clear
-    tags = self.caption.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    tags = self.body.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
     tags.uniq.map do |tag|
       hashtag = Tag.find_or_create_by(name: tag.downcase.delete('#').delete('＃'))
       post.tags << hashtag

@@ -1,14 +1,33 @@
-<h1><%= @another_entry.user.name %>さんとのDM詳細</h1>
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-6 offset-2 mt-3 mb-2">
+      <h1><%= @another_entry.user.name %>さんとのDM</h1>
+    </div>
+  </div>
+    
+  <div class="row mt-3">
+    <div class="col-6 offset-2 border border-primary  h-50">
+      <% if @messages.present? %>
+        <% @messages.each do |m| %>
+        <div class="d-flex mt-2 align-items-center">
+          <%= image_tag m.user.get_profile_image,size:"30x30",class:"rounded-circle mr-3" %>
+          <%= m.user.name %>
+          <%= m.created_at.strftime('%Y/%m/%d %H:%M') %>
+      　　<%= m.body %>
+      　</div>
+        <% end %>
+      <% end %>
+      </div>
+  </div>
+      
+  <div class="row">
+    <div class="col-6 offset-2 border border-primary mt-4">
+      <%= form_with model:@message do |f| %>
+        <%= f.text_area :body, placeholder: "メッセージを入力して下さい", size: "40x3" , class:"form-control " %>
+        <%= f.hidden_field :room_id, value: @room.id %>
+        <%= f.submit "投稿",class: 'btn-sm btn-primary float-right'%>
+      <% end %>
 
-<% if @messages.present? %>
-  <% @messages.each do |m| %>
-    <%= m.user.name %>
-　　<%= m.body %>
-  <% end %>
-<% end %>
-
-<%= form_with model:@message do |f| %>
-  <%= f.text_field :body, placeholder: "メッセージを入力して下さい" , size: 70, class:"form-text-field" %>
-  <%= f.hidden_field :room_id, value: @room.id %>
-  <%= f.submit "投稿",class: 'form-submit'%>
-<% end %>
+    </div>
+  </div>
+</div>

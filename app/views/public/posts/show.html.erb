@@ -1,47 +1,80 @@
-<h1>post.show</h1>
+<div class="container">
+  <div class="row mt-3">
+      <div class="col-6 offset-2 d-flex align-items-center ">
+        <h1><%= @post.title %></h1>
+        <% if @post.user == current_user %>
+          <h2>
+            <%= link_to edit_post_path(@post),class:"text-muted" do%>
+             <i class="far fa-edit fa-xs ml-5"></i>
+             <% end %>
+          </h2>
+            <% if @post.status == "下書き" %>
+              <p class="text-muted ml-3 pt-3">
+                  ※下書き
+              </p>
+            <% end %>
+          <% else %>
+           <h2 id="post_<%= @post.id %>">
+               <%= render "public/favorites/favorite", post: @post%>
+           </h2>
+        <% end %>
+      </div>
+  </div>
 
-<h2>登録情報 <%= link_to "編集する",edit_post_path(@post)%></h2>
+  <div class="row mt-2">
+      <table class="table table-bordered col-6 offset-2 text-center ">
+        <thead>
+          <tr>
+            <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+            <td colspan="2" >
+              <%= link_to user_path(@post.user) do %>
+                <%= image_tag @post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+                <%= @post.user.name %>
+              <% end %>
+            </td>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th scope="col">募集人数</th>
+            <th scope="col">参加型</th>
+            <th scope="col">募集状況</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/<%= @post.capacity %>人</td>
 
-<ul>
-    <li>
-        <p>title</p>
-        <%= @post.title %>
-    </li>
+            <!--自由参加または承認制のif文-->
+            <% if @post.is_free? %>
+              <td class="text-primary">自由参加</td>
+                <% else %>
+              <td class="text-waring">オーナー承認制</td>
+            <% end %>
 
-    <li>
-        <p>body</p>
-        <%= render_with_hashtags(@post.body) %>
-    </li>
+            <!--募集関係　if-->
+            <% if @post.is_stop? %>
+              <td class="text-danger">募集停止</td>
+                <% else %>
+              <td class="text-success">募集中</td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+  </div>
 
-    <li>
-        <p>人数</p>
-        <%= @post.capacity %>
-    </li>
+  <div class="row mt-2">
+    <div class="col-6 offset-2 border border-primary h-auto" style=" background-color: rgba(0,0,255,.1)">
+      <%= render_with_hashtags(@post.body) %>
+    </div>
+  </div>
 
-    <li>
-        <p>公開ステータス</p>
-        <%= @post.status %>
-    </li>
+  <div id="comments_form" class="row mt-4">
+    <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+  </div>
+    
+  <div id="comments_ajax" class="row mt-4">
+    <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
+  </div>
 
-    <li>
-        <p>自由参加型</p>
-        <%= @post.is_free %>
-    </li>
-
-    <li>
-        <p>募集状況</p>
-        <%= @post.is_stop %>
-    </li>
-
-   <li id="post_<%= @post.id %>">
-       <%= render "public/favorites/favorite", post: @post %>
-   </li>
-
-</ul>
-<div id="comments_form">
-  <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
-</div>
-
-<div id="comments_ajax">
-  <%= render partial:"public/comments/comment", locals: {post: @post,comments: @comments} %>
 </div>
