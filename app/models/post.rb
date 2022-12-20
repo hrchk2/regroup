@@ -5,7 +5,8 @@ class Post < ApplicationRecord
   has_many :tags ,through: :post_tags
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
-
+  
+  has_many :participants,dependent: :destroy
 
   enum status: { "公開": 0, "下書き": 1 }
 
@@ -49,4 +50,7 @@ class Post < ApplicationRecord
     end
   end
   
+  def join?(user)
+      participants.where(user_id: user.id).exists?
+  end
 end

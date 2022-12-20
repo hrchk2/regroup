@@ -7,7 +7,7 @@
                   ※下書き
               </p>
             <% end %>
-        <h2 class="ml-3"><i class="fas fa-heart text-danger fa-xs"></i><%= @post.favorites.count %></h2>
+        <h2 class="ml-3"><i class="fas fa-heart text-warning fa-xs"></i><%= @post.favorites.count %></h2>
         <%= link_to admin_post_path(@post),method: :delete,data: {confirm: '本当に消しますか？'},class: "btn btn-sm btn-danger ml-4" do %>
             <i class="fas fa-trash-alt "></i>
         <% end %>

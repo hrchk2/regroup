@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-6 offset-2 mt-3 mb-2 ">
+        <h1>フォロワー一覧</h1>
+
+      <table class='table table-hover shadow-lg mt-3'>
+        <thead class="bg-light">
+          <tr>
+            <th></th>
+            <th><u>氏名</u></th>
+            <th>プロフィール</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="border-bottom">
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= image_tag user.get_profile_image, size:'40x40',class:"rounded-circle" %></td>
+              <td><u><%= link_to user.name ,user_path(user)%></u></td>
+              <td><%= user.introduction %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</diV>

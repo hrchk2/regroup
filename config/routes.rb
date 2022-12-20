@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     resources :messages, only: [:create]
     resources :rooms, only: [:create,:show,:index]
     get "search" => "searches#search"
+    resources :participants,only: [:create] do
+      patch "permit" => "participants#permit"
+      patch "ignore" => "participants#ignore"
+    end
   end
 
   namespace :admin do
