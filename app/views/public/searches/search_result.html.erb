@@ -8,8 +8,7 @@
   <div class="row mt-2">
       <% if @range == "Tag" %>
       
-        <% @tags.each do |tag| %>
-          <% tag.posts.each do |post|%>
+          <% @posts.each do |post|%>
           
             <table class="table table-bordered col-6 offset-2 text-center">
               <thead>
@@ -45,7 +44,11 @@
               </body>
               <tbody>
                 <tr>
-                  <td>/<%= post.capacity %>人</td>
+                  <% if post.capacity == 0 %>
+                    <td> 参加制限なし </td>
+                  <% else %>
+                    <td><%= post.participants.where(approval_status: 1).count %>/<%= post.capacity %>人</td>
+                  <% end %>
 
                   <!--自由参加または承認制のif文-->
                   <% if post.is_free? %>
@@ -64,7 +67,6 @@
               </tbody>
               
               <% end %>
-            <% end %>
           </tbody>
         </table>
       <% else %>
@@ -104,7 +106,11 @@
               </body>
               <tbody>
                 <tr>
-                  <td>/<%= post.capacity %>人</td>
+                 <% if post.capacity == 0 %>
+                  <td> 参加制限なし </td>
+                <% else %>
+                  <td><%= post.participants.where(approval_status: 1).count %>/<%= post.capacity %>人</td>
+                <% end %>
 
                   <!--自由参加または承認制のif文-->
                   <% if post.is_free? %>

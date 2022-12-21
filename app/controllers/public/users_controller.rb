@@ -20,6 +20,7 @@ class Public::UsersController < ApplicationController
         @entry = Entry.new
       end
     end
+    @posts = Post.where(user_id: @user.id,status: 0)
   end
 
   def edit
@@ -52,6 +53,11 @@ class Public::UsersController < ApplicationController
       @user = User.find(params[:id])
       favorites= Favorite.where(user_id: @user.id).pluck(:post_id)
       @favorite_posts = Post.find(favorites)
+  end
+  
+  def drafts
+      @user = User.find(params[:id])
+      @posts = Post.where(user_id: @user.id,status: 1)
   end
 
   private

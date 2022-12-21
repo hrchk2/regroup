@@ -2,6 +2,7 @@
   <div class="row mt-3">
     <div class="col-6 offset-2">
       <h1>ユーザー編集</h1>
+      <%= render 'layouts/errors', obj: @user %>
 
     <%= form_with model: @user,url: user_path(@user), local:true do |f| %>
       <div class="form-group">

@@ -1,14 +1,15 @@
 class Public::MessagesController < ApplicationController
-  
+
   def create
       message = current_user.messages.new(message_params)
       if message.save
          redirect_to room_path(message.room)
       else
-        redirect_to root_path
+        flash[:error] = "メッセージを入力してください。"
+        redirect_to request.referer
       end
   end
-  
+
   private
 
   def message_params

@@ -2,9 +2,10 @@
   <div class="row">
     <div class="col-6 offset-2 mt-3 mb-2 ">
       <h1>新規投稿</h1>
+      <%= render 'layouts/errors', obj: @post %>
     </div>
   </div>
-  
+
     <%= form_with model:@post,local:true do |f| %>
       <div class="row">
         <div class="col-6 offset-2 form-group">
@@ -12,21 +13,21 @@
           <%= f.text_field :title,class:"form-control" %>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="form-group col-6 offset-2">
           <%= f.label :body,"募集内容" %>
           <%= f.text_area :body,class:"form-control",rows: 20 %>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="form-group col-6 offset-2">
           <%= f.label :capacity,"参加人数" %>
           <%= f.select :capacity, capacity_select %>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="form-group col-6 offset-2 ">
             <%= f.label :"参加設定" %>
@@ -38,7 +39,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="form-group col-6 offset-2">
             <%= f.label :"公開範囲" %>

@@ -5,10 +5,13 @@ class Post < ApplicationRecord
   has_many :tags ,through: :post_tags
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
-  
+
   has_many :participants,dependent: :destroy
 
   enum status: { "公開": 0, "下書き": 1 }
+
+  validates :title, presence: true,length: { minimum: 2 }
+  validates :body, presence: true,length: { minimum: 2 }
 
   after_create do
     post = Post.find_by(id: self.id)
@@ -30,12 +33,12 @@ class Post < ApplicationRecord
       post.tags << hashtag
     end
   end
-  
+
   # userがいいねしているかどうか判定
   def favorited_by?(user)
     favorites.where(user_id: user.id).exists?
   end
-  
+
   def self.looks(search, word)
     if search == "perfect_match"
       @post = Post.where("title LIKE?", "#{word}")
@@ -49,7 +52,7 @@ class Post < ApplicationRecord
       @post = Post.all
     end
   end
-  
+
   def join?(user)
       participants.where(user_id: user.id).exists?
   end

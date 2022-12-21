@@ -43,8 +43,12 @@
         </thead>
         <tbody>
           <tr>
-            <td>/<%= @post.capacity %>人</td>
-
+            <% if @post.capacity == 0 %>
+              <td> 参加制限なし </td>
+            <% else %>
+              <td><%= @join.count %>/<%= @post.capacity %>人</td>
+            <% end %>
+            
             <!--自由参加または承認制のif文-->
             <% if @post.is_free? %>
               <td class="text-primary">自由参加</td>
@@ -79,9 +83,11 @@
 
 </div>
 
-<% unless @post.user == current_user %>
+<!--userが同じでない　または　キャパが０でない場合-->
+<% unless (@post.user == current_user) || (@post.capacity == 0) %>
   <!--申請の有無-->
-  <% if @post.join?(current_user) %> 
+  <h3>申請状況</h3>
+  <% if @post.join?(current_user) %>
      <% if @member.approval_status == "参加中" %>
         <p>参加中</p>
      <% elsif @member.approval_status == "キャンセル待ち" %>
@@ -98,10 +104,12 @@
   <% end %>
 <% end %>
 
+<!--userが同じかつ参加申請がある場合-->
 <% if (@post.user == current_user) && @participants %>
-  <% @participants.each do |part| %>
-    <%= part.user.name %>
-    <%= link_to "許可",participant_permit_path(part),method: :patch %>
-    <%= link_to "拒否",participant_ignore_path(part),method: :patch %>
-  <% end %>
+  <h3>申請者一覧</h3>
+    <% @participants.each do |part| %>
+      <%= part.user.name %>さん
+      <%= link_to "許可",participant_permit_path(part),method: :patch,class:"btn btn-primary" %>
+      <%= link_to "拒否",participant_ignore_path(part),method: :patch,class:"btn btn-danger" %>
+    <% end %>
 <% end %>
