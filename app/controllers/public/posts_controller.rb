@@ -22,15 +22,17 @@ class Public::PostsController < ApplicationController
     @comment = current_user.comments.new
     @participant = Participant.new
     #参加申請中の人
-    @participants = @post.participants.where(approval_status: 0)
+    @participants = @post.participants.where(approval_status: 1)
     #参加中
-    @join = @post.participants.where(approval_status: 1)
+    @join = @post.participants.where(approval_status: 2)
     # 参加しているかどうか
     @member = Participant.find_by(user_id: current_user.id,post_id: @post.id)
     # 参加中の人がキャパと同じかそれ以上の時、募集をストップ
-    if @join.count >= @post.capacity
-       @post.is_stop = true
-       @post.save
+    if @post.capacity == 0
+    elsif @join.count >= @post.capacity
+       @post.update(is_stop: true)
+    else @join.count < @post.capacity
+       @post.update(is_stop: false)
     end
   end
 

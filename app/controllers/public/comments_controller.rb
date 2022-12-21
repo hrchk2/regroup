@@ -4,8 +4,10 @@ class Public::CommentsController < ApplicationController
     @comments = @post.comments
     @comment = current_user.comments.new(comment_params)
     if @comment.save
+      # flash[:error] = nil
     else
-      render "posts/show"
+      flash.now[:error] = "コメントを入力してください"
+      render :error
     end
   end
 
