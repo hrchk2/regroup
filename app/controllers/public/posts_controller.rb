@@ -1,4 +1,8 @@
 class Public::PostsController < ApplicationController
+  before_action :ensure_correct_user, only: [:edit,:update,:destroy]
+  before_action :ensure_guest_user, only: [:edit,:update,:destroy]
+  
+  
   def new
     @post = Post.new
   end
@@ -22,9 +26,11 @@ class Public::PostsController < ApplicationController
     @comment = current_user.comments.new
     @participant = Participant.new
     #参加申請中の人
-    @participants = @post.participants.where(approval_status: 1)
+    @participants = @post.participants.where(approval_status: 0 )
     #参加中
-    @join = @post.participants.where(approval_status: 2)
+    @join = @post.participants.where(approval_status: 1 )
+    # キャンセル待ち
+    @wait = @post.participants.where(approval_status: 2)
     # 参加しているかどうか
     @member = Participant.find_by(user_id: current_user.id,post_id: @post.id)
     # 参加中の人がキャパと同じかそれ以上の時、募集をストップ
@@ -68,6 +74,20 @@ class Public::PostsController < ApplicationController
   private
   def post_params
       params.require(:post).permit(:user_id,:title,:body,:capacity,:is_free,:is_stop,:status)
+  end
+
+  def ensure_correct_user
+    @post = Post.find(params[:id])
+    @user = @post.user
+    unless  @user == current_user
+      redirect_to posts_path, notice: 'ユーザーが正しくありません。'
+    end
+  end
+  
+  def ensure_guest_user
+    if  current_user.name == "guestuser"
+      redirect_to posts_path, notice: 'ゲストユーザーは遷移できません。'
+    end
   end
 
 end

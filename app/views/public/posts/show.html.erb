@@ -87,7 +87,7 @@
 
 </div>
 
-<!--オーナー以外の閲覧者用　userが同じでない　または　キャパが０でない場合-->
+<!--閲覧者用　userが同じでない　または　キャパが０でない場合-->
 <% unless (@post.user == current_user) || (@post.capacity == 0) %>
   <!--申請の有無-->
   <h3>申請状況</h3>
@@ -97,10 +97,10 @@
         <%= link_to "キャンセルする",participant_path(@member),method: :delete %>
      <% elsif @member.approval_status == "キャンセル待ち" %>
         <p>キャンセル待ち</p>
-        <%= link_to "キャンセルする",participant_path(@member),method: :delete %>
+        <%= link_to "申請を取り下げる",participant_path(@member),method: :delete %>
      <% else @member.approval_status == "参加申請中" %>
         <p>参加申請中</p>
-        <%= link_to "キャンセルする",participant_path(@member),method: :delete %>
+        <%= link_to "申請を取り下げる",participant_path(@member),method: :delete %>
      <% end %>
   <% else %>
       <%= form_with model: @participant do |f| %>
@@ -121,7 +121,11 @@
   <% end %>
 <% end %>
 
-
-<% if (@post.user ==current_user) && @participants.exists? %>
-  <p>aaaaa</p>
+<!--オーナー用　userが同じかつキャンセル待ちがある場合-->
+<% if (@post.user ==current_user) && @wait.exists? %>
+ <p>キャンセル待ち一覧</p>
+ <% @wait.each do |wait| %>
+    <%= wait.user.name %>さん
+    <%= link_to "許可",participant_permit_path(wait),method: :patch,class:"btn btn-primary" %>
+  <% end %>
 <% end %>

@@ -1,7 +1,11 @@
 <div class="container">
   <div class="row mt-3">
     <div class="col-6 offset-3">
-
+    
+    <div class="text-danger">
+      <%= flash[:notice] %>
+    </div>
+    
       <div class="card">
         <div class="text-center">
           <%= image_tag @user.get_profile_image, size:'150x150',class:"rounded-circle mt-3" %>
@@ -40,6 +44,8 @@
           <div class="d-flex justify-content-around border-top pt-3">
 
             <%=link_to "お気に入り",favorites_user_path(@user),class:"btn btn-outline-secondary" %>
+            
+            <%=link_to"申請管理",notifications_user_path(@user),class:"btn btn-outline-success" %>
 
             <% unless @user.id == current_user.id %>
                 <% if @isRoom == true %>

@@ -61,6 +61,9 @@
           <li class="nav-item mr-2">
             <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post, class:"text-light" %>
           </li>
+          <li class="nav-item mr-2">
+            <%= link_to 'admin', admin_session_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post, class:"text-light" %>
+          </li>
         <% end %>
       </ul>
   </div>
