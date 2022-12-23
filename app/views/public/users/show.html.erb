@@ -3,7 +3,7 @@
     <div class="col-6 offset-3">
     
     <div class="text-danger">
-      <%= flash[:notice] %>
+      <%= flash[:error] %>
     </div>
     
       <div class="card">
@@ -45,8 +45,11 @@
 
             <%=link_to "お気に入り",favorites_user_path(@user),class:"btn btn-outline-secondary" %>
             
-            <%=link_to"申請管理",notifications_user_path(@user),class:"btn btn-outline-success" %>
-
+            <% if @user == current_user %>
+              <%= link_to "下書き一覧",drafts_user_path(@user),class:"btn btn-outline-info" %>
+              <%=link_to"申請管理",notifications_user_path(@user),class:"btn btn-outline-success" %>
+            <% end %>
+            
             <% unless @user.id == current_user.id %>
                 <% if @isRoom == true %>
                   <%= link_to room_path(@roomId),class:"btn btn-primary" do %>
@@ -134,8 +137,3 @@
     </div>
   </div>
 </div>
-
-
-<% if @user == current_user %>
-<%= link_to "下書き一覧",drafts_user_path(@user) %>
-<% end %>

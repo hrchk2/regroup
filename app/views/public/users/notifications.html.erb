@@ -6,70 +6,72 @@
   </div>
 
   <div class="row mt-2">
-    <% @posts.each do |post| %>
-      <% post.participants.where(approval_status: 0).each do |permit| %>
-      <table class="table table-bordered col-6 offset-3 text-center">
-          <thead>
-            <tr>
-              <th colspan="3">
-                <%=link_to permit.post.title,post_path(permit.post),class:"text-dark" %>
+    <% if @new_posts_paticipants_count > 0 %>
+      <% @new_posts.each do |post| %>
+        <% post.participants.each do |permit| %>
+          <table class="table table-bordered col-6 offset-3 text-center">
+            <thead>
+              <tr>
+                <th colspan="3">
+                  <%=link_to permit.post.title,post_path(permit.post),class:"text-dark" %>
 
-                <!--付いているタグのeach-->
-                <% permit.post.tags.each do |tag| %>
-                  #<%= tag.name %></p>
+                  <!--付いているタグのeach-->
+                  <% permit.post.tags.each do |tag| %>
+                    #<%= tag.name %>
+                  <% end %>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+                <td colspan="2" >
+                  <%= link_to user_path(permit.post.user) do %>
+                    <%= image_tag permit.post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+                    <%= permit.post.user.name %>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th scope="col">募集人数</th>
+                <th scope="col">参加型</th>
+                <th scope="col">募集状況</th>
+              </tr>
+            </body>
+            <tbody>
+              <tr>
+                <% if permit.post.capacity == 0 %>
+                  <td> 参加制限なし </td>
+                <% else %>
+                  <td><%= permit.post.participants.where(approval_status: 1).count %>/<%= permit.post.capacity %>人</td>
                 <% end %>
 
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row" colspan="1" class="align-middle">オーナー名</th>
-              <td colspan="2" >
-                <%= link_to user_path(permit.post.user) do %>
-                  <%= image_tag permit.post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
-                  <%= permit.post.user.name %>
+                <!--自由参加または承認制のif文-->
+                <% if permit.post.is_free? %>
+                  <td class="text-primary">自由参加</td>
+                    <% else %>
+                  <td class="text-waring">オーナー承認制</td>
                 <% end %>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <th scope="col">募集人数</th>
-              <th scope="col">参加型</th>
-              <th scope="col">募集状況</th>
-            </tr>
-          </body>
-          <tbody>
-            <tr>
-              <% if permit.post.capacity == 0 %>
-                <td> 参加制限なし </td>
-              <% else %>
-                <td><%= permit.post.participants.where(approval_status: 1).count %>/<%= permit.post.capacity %>人</td>
-              <% end %>
 
-              <!--自由参加または承認制のif文-->
-              <% if permit.post.is_free? %>
-                <td class="text-primary">自由参加</td>
-                  <% else %>
-                <td class="text-waring">オーナー承認制</td>
-              <% end %>
-
-              <!--募集関係　if-->
-              <% if permit.post.is_stop? %>
-                <td class="text-danger">募集停止</td>
-                  <% else %>
-                <td class="text-success">募集中</td>
-              <% end %>
-            </tr>
-          </tbody>
-        </table>
+                <!--募集関係　if-->
+                <% if permit.post.is_stop? %>
+                  <td class="text-danger">募集停止</td>
+                    <% else %>
+                  <td class="text-success">募集中</td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
       <% end %>
+    <% else %>
+    <div class="col-6 offset-3 text-center">
+      <p>申請中は、ありません。</p>
+    </div>
     <% end %>
   </div>
-
-
-
 
   <div class="row mt-3">
     <div class="col-6 offset-3 mt-3 mb-2 ">
@@ -77,67 +79,72 @@
     </diV>
   </div>
   <div class="row mt-2">
-    <% @posts.each do |post| %>
-      <% post.participants.where(approval_status: 2).each do |wait| %>
+    <% if @cancel_posts_paticipants_count > 0 %>
+      <% @cancel_posts.each do |post| %>
+        <% post.participants.each do |wait| %>
 
-      <table class="table table-bordered col-6 offset-3 text-center">
-          <thead>
-            <tr>
-              <th colspan="3">
-                <%=link_to wait.post.title,post_path(wait.post),class:"text-dark" %>
-
-                <!--付いているタグのeach-->
-                <% wait.post.tags.each do |tag| %>
-                  #<%= tag.name %></p>
+          <table class="table table-bordered col-6 offset-3 text-center">
+            <thead>
+              <tr>
+                <th colspan="3">
+                  <%=link_to wait.post.title,post_path(wait.post),class:"text-dark" %>
+  
+                  <!--付いているタグのeach-->
+                  <% wait.post.tags.each do |tag| %>
+                    #<%= tag.name %>
+                  <% end %>
+  
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+                <td colspan="2" >
+                  <%= link_to user_path(wait.post.user) do %>
+                    <%= image_tag wait.post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+                    <%= wait.post.user.name %>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th scope="col">募集人数</th>
+                <th scope="col">参加型</th>
+                <th scope="col">募集状況</th>
+              </tr>
+            </body>
+            <tbody>
+              <tr>
+                <% if wait.post.capacity == 0 %>
+                  <td> 参加制限なし </td>
+                <% else %>
+                  <td><%= wait.post.participants.where(approval_status: 1).count %>/<%= wait.post.capacity %>人</td>
                 <% end %>
-
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row" colspan="1" class="align-middle">オーナー名</th>
-              <td colspan="2" >
-                <%= link_to user_path(wait.post.user) do %>
-                  <%= image_tag wait.post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
-                  <%= wait.post.user.name %>
+  
+                <!--自由参加または承認制のif文-->
+                <% if wait.post.is_free? %>
+                  <td class="text-primary">自由参加</td>
+                    <% else %>
+                  <td class="text-waring">オーナー承認制</td>
                 <% end %>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <th scope="col">募集人数</th>
-              <th scope="col">参加型</th>
-              <th scope="col">募集状況</th>
-            </tr>
-          </body>
-          <tbody>
-            <tr>
-              <% if wait.post.capacity == 0 %>
-                <td> 参加制限なし </td>
-              <% else %>
-                <td><%= wait.post.participants.where(approval_status: 1).count %>/<%= wait.post.capacity %>人</td>
-              <% end %>
-
-              <!--自由参加または承認制のif文-->
-              <% if wait.post.is_free? %>
-                <td class="text-primary">自由参加</td>
-                  <% else %>
-                <td class="text-waring">オーナー承認制</td>
-              <% end %>
-
-              <!--募集関係　if-->
-              <% if wait.post.is_stop? %>
-                <td class="text-danger">募集停止</td>
-                  <% else %>
-                <td class="text-success">募集中</td>
-              <% end %>
-            </tr>
-          </tbody>
-        </table>
-
+  
+                <!--募集関係　if-->
+                <% if wait.post.is_stop? %>
+                  <td class="text-danger">募集停止</td>
+                    <% else %>
+                  <td class="text-success">募集中</td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
         <% end %>
       <% end %>
+    <% else %>
+    <div class="col-6 offset-3 text-center">
+      <p>キャンセル待ちは、ありません。</p>
+    </div>
+    <% end %>
   </div>
 </div>

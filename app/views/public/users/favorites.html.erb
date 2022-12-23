@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row mt-3">
-    <div class="col-6 offset-2 mt-3 mb-2 ">
+    <div class="col-6 offset-3 mt-3 mb-2 ">
         <h1>お気に入り投稿一覧</h1>
     </diV>
   </div>
   <div class="row mt-2">
     <% @favorite_posts.each do |post| %>
-      <table class="table table-bordered col-6 offset-2 text-center">
+      <table class="table table-bordered col-6 offset-3 text-center">
           <thead>
             <tr>
               <th colspan="3">
@@ -14,7 +14,7 @@
 
                 <!--付いているタグのeach-->
                 <% post.tags.each do |tag| %>
-                  #<%= tag.name %></p>
+                  #<%= tag.name %>
                 <% end %>
 
               </th>
@@ -61,14 +61,3 @@
       <% end %>
   </div>
 </div>
-
-
-
-
-
-
-
-<h1>いいね一覧</h1>
-<% @favorite_posts.each do |post|%>
-<%=post.title %>
-<% end %>

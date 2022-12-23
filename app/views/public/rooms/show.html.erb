@@ -2,9 +2,6 @@
   <div class="row mt-3">
     <div class="col-6 offset-3 mt-3 mb-2">
       <h1><%= @another_entry.user.name %>さんとのDM</h1>
-      <div class="text-danger">
-        <%= flash[:error] %>
-      </div>
     </div>
   </div>
     
@@ -22,9 +19,15 @@
       <% end %>
       </div>
   </div>
+  
+  <div class="row">
+    <div class="col-6 offset-3 text-danger mt-3">
+      <%= flash[:error] %>
+    </div>
+  </div>
       
   <div class="row">
-    <div class="col-6 offset-3 border border-primary mt-4">
+    <div class="col-6 offset-3 mt-3">
       <%= form_with model:@message do |f| %>
         <%= f.text_area :body, placeholder: "メッセージを入力して下さい", size: "40x3" , class:"form-control " %>
         <%= f.hidden_field :room_id, value: @room.id %>

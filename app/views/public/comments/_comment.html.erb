@@ -1,4 +1,4 @@
- <div class="col-6 offset-2 border border-primary">
+ <div class="col-6 offset-3 border border-primary mb-5">
   <h4>コメント欄</h4>
     <% comments.each do |comment| %>
       <div class="d-flex mt-2 align-items-center">
@@ -6,7 +6,7 @@
           <%= image_tag comment.user.get_profile_image,size:"30x30",class:"rounded-circle mr-3" %>
           <p><%= comment.user.name %></p>
         <% end %>
-        
+
         <p><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
         <p class="ml-5"><%= comment.body %></p>
 

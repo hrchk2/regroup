@@ -43,6 +43,7 @@ class Public::UsersController < ApplicationController
   def withdraw
     @user.update(is_deleted: true)
     reset_session
+    flash[:notice] = "退会処理を実行いたしました"
     redirect_to root_path
   end
 
@@ -58,8 +59,19 @@ class Public::UsersController < ApplicationController
   end
 
   def notifications
-      ensure_correct_user
-      @posts = Post.where(user_id: @user.id)
+      @posts =  @user.posts.includes(:participants).distinct
+      @new_posts = @posts.where(participants: {approval_status: 0})
+      @new_posts_paticipants_count = @new_posts.group(:post_id).count.values.sum
+      @cancel_posts = @posts.where(participants: {approval_status: 2})
+      @cancel_posts_paticipants_count = @cancel_posts.group(:post_id).count.values.sum
+    #   @posts.each do |post|
+    #     post.participants.where(approval_status: 0).each do |permit|
+    #       if permit.empty?
+    #         @permit_empty = true
+    #       end
+    #     end
+    # end
+
   end
 
   private
@@ -71,7 +83,8 @@ class Public::UsersController < ApplicationController
   def ensure_correct_user
     @user = User.find(params[:id])
     unless  @user == current_user
-      redirect_to user_path(current_user), notice: 'ユーザーが正しくありません。'
+      flash[:error]= "ユーザーが正しくありません。"
+      redirect_to user_path(current_user)
     end
   end
 
@@ -79,7 +92,7 @@ class Public::UsersController < ApplicationController
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.name == "guestuser"
-      redirect_to user_path(current_user) , notice: 'ゲストユーザーは遷移できません。'
+      redirect_to user_path(current_user) , error: 'ゲストユーザーは遷移できません。'
     end
   end
 

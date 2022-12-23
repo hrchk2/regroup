@@ -4,3 +4,21 @@
 // body {
 //   background-image: url("../images/no_image.jpg");
 // }
+
+.topbg {
+  background-image: url("../images/top.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+  padding: 20px 0;
+  text-align: center;
+}

@@ -5,7 +5,7 @@ class Public::MessagesController < ApplicationController
       if message.save
          redirect_to room_path(message.room)
       else
-        flash[:error] = "メッセージを入力してください。"
+        flash[:error] = "２文字以上入力してください。"
         redirect_to request.referer
       end
   end

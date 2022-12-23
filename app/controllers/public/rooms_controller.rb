@@ -28,6 +28,7 @@ class Public::RoomsController < ApplicationController
     @another_entry = @entries.where.not(user_id: current_user.id).first
   end
 
+  private
 
   def ensure_correct_user
     @room = Room.find(params[:id])
