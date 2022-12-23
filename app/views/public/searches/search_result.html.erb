@@ -20,7 +20,7 @@
 
                     <!--付いているタグのeach-->
                     <% post.tags.each do |tag| %>
-                      #<%= tag.name %>
+                       <%=link_to "#""#{tag.name}","/posts/tag/#{tag.name}" %>
                     <% end %>
 
                   </th>
@@ -83,7 +83,7 @@
 
                     <!--付いているタグのeach-->
                     <% post.tags.each do |tag| %>
-                      #<%= tag.name %>
+                       <%=link_to "#""#{tag.name}","/posts/tag/#{tag.name}" %>
                     <% end %>
 
                   </th>

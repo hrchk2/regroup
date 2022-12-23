@@ -1,70 +1,74 @@
-<nav class="navbar navbar-expand navbar-dark bg-secondary sticky-top bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="/">Re:group</a>
-    
+    <button class="navbar-toggler my-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
       <% if user_signed_in? %>
-          <%= form_with url: search_path, local: true, method: :get,class: "form-row" do |f| %>
-            <%= f.text_field :word,class: "form-control col-5 mr-1"  %>
-            <%= f.select :range, options_for_select([['Tag'], ['Post']]),{},class: "col-2 mr-1" %>
-            <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]),{},class: "col-2 mr-1"  %>
-            <%= f.submit "Search", class: "btn btn-outline-success col-2" %>
-          <% end %>
-          <% elsif admin_signed_in?%>
-            <%= form_with url: admin_search_path, local: true, method: :get do |f| %>
-            <%= f.text_field :word,class: "form-control" %>
-            <%= f.select :range, options_for_select([['Tag'], ['Post']]) %>
-            <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
-            <%= f.submit "Search", class: "btn btn-outline-success" %>
-          <% end %>
+        <%= form_with url: search_path, local: true, method: :get,class: "form-row ml-auto" do |f| %>
+        <%= f.text_field :word,class: "form-control col-5 mr-1"  %>
+        <%= f.select :range, options_for_select([['Tag'], ['Post']]),{},class: "col-2 mr-1" %>
+        <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]),{},class: "col-2 mr-1" %>
+        <%= f.submit "Search", class: "btn btn-outline-success col-2" %>
+        <% end %>
+      <% elsif admin_signed_in?%>
+        <%= form_with url: admin_search_path, local: true, method: :get,class: "form-row ml-auto" do |f| %>
+        <%= f.text_field :word,class: "form-control col-5 mr-1" %>
+        <%= f.select :range, options_for_select([['Tag'], ['Post']]),{},class: "col-2 mr-1" %>
+        <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]),{},class: "col-2 mr-1" %>
+        <%= f.submit "Search", class: "btn btn-outline-success col-2" %>
+        <% end %>
       <% end %>
-      
-      <ul class="navbar-nav d-flex align-items-center">
+
+      <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
-          <li class="nav-item mr-2">
-            <%= link_to "投稿する",new_post_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "投稿する",new_post_path, class:"nav-link mt-lg-3" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "投稿一覧",posts_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "投稿一覧",posts_path, class:"nav-link mt-lg-3" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "プロフィール",user_path(current_user.id), class:"text-light" %>
-          </li>
-          <li class="nav-item mr-2">
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link mt-lg-3" %>
           </li>
           <li class="nav-item">
-            <%= image_tag current_user.get_profile_image, size:'75x75',class:"rounded-circle" %>
+             <%= link_to user_path(current_user) do %>
+             <%= image_tag current_user.get_profile_image, size:'75x75',class:"rounded-circle nav-link" %>
+             <% end %>
           </li>
         <% elsif admin_signed_in? %>
-          <li class="nav-item mr-2">
-            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"text-light"%>
+          <li class="nav-item active">
+            <%= link_to "ユーザー一覧", admin_users_path, class:"nav-link mt-lg-2" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "User一覧",admin_users_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "投稿一覧", admin_posts_path, class:"nav-link mt-lg-2" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "投稿一覧",admin_posts_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "タグ一覧", admin_tags_path, class:"nav-link mt-lg-2" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "タグ一覧",admin_tags_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"nav-link mt-lg-2"%>
           </li>
         <% else %>
-          <li class="nav-item mr-2">
-            <%= link_to "About", about_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "About", about_path, class:"nav-link mt-lg-2" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "新規登録", new_user_registration_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to "ログイン", new_user_session_path, class:"nav-link mt-lg-2" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to "ログイン", new_user_session_path, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to 'ゲストログイン', users_guest_sign_in_path,method: :post, class:"nav-link mt-lg-2" %>
           </li>
-          <li class="nav-item mr-2">
-            <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post, class:"text-light" %>
-          </li>
-          <li class="nav-item mr-2">
-            <%= link_to 'admin', admin_session_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post, class:"text-light" %>
+          <li class="nav-item active">
+            <%= link_to 'admin', admin_session_path, method: :post, class:"nav-link mt-lg-2" %>
           </li>
         <% end %>
       </ul>
+    </div>
+
   </div>
 </nav>
+
