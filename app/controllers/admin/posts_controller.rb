@@ -1,7 +1,7 @@
 class Admin::PostsController < ApplicationController
 
   def index
-    @posts =Post.all
+    @posts =Post.all.page(params[:page])
   end
 
   def show
@@ -20,7 +20,7 @@ class Admin::PostsController < ApplicationController
     @tag = Tag.find_by(name: params[:name])
     # tagを削除すると検索時エラーがかかるのでかわりのif文
     if @tag
-       @posts = @tag.posts
+       @posts = @tag.posts.page(params[:page])
     else
     end
   end

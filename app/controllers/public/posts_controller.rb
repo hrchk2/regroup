@@ -8,7 +8,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts =Post.where(status: 0)
+    @posts =Post.where(status: 0).page(params[:page])
   end
 
   def create
@@ -66,7 +66,7 @@ class Public::PostsController < ApplicationController
     @tag = Tag.find_by(name: params[:name])
     # tagを削除すると検索時エラーがかかるのでかわりのif文
     if @tag
-       @posts = @tag.posts.where(status: 0 )
+       @posts = @tag.posts.where(status: 0 ).page(params[:page])
     else
     end
   end

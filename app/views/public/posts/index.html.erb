@@ -4,9 +4,9 @@
         <div class="text-danger">
           <%= flash[:post_notice] %>
         </div>
-        
+
         <h1>投稿一覧</h1>
-        
+
     </diV>
   </div>
   <div class="row mt-2">
@@ -69,4 +69,11 @@
         </table>
       <% end %>
   </div>
+
+  <div class="row">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
+      <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
+    </div>
+  </div>
+
 </div>

@@ -5,34 +5,34 @@
        <h5>※管理者の方はこちらからログイン</h5>
     </div>
   </div>
-  
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+  <%= form_with model:@admin,url: admin_session_path do |f| %>
     <div class="form-group row d-flex justify-content-center">
       <div class="col-5">
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"form-control" %>
      </div>
     </div>
-  
+
     <div class="form-group row d-flex justify-content-center">
       <div class="col-5">
         <%= f.label :password %><br />
         <%= f.password_field :password, autocomplete: "current-password",class:"form-control" %>
       </div>
     </div>
-  
+
     <% if devise_mapping.rememberable? %>
       <div class="form-group row d-flex justify-content-center">
         <%= f.check_box :remember_me,class:"mr-2"%>
         <%= f.label :remember_me %>
       </div>
     <% end %>
-  
+
     <div class="form-group row d-flex justify-content-center">
       <%= f.submit "ログイン", class:"btn btn-primary" %>
     </div>
   <% end %>
-  
+
   <div class="form-group row d-flex justify-content-center">
     <%= render "admin/shared/links" %>
   </div>

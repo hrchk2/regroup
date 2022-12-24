@@ -21,7 +21,7 @@ class Public::UsersController < ApplicationController
         @entry = Entry.new
       end
     end
-    @posts = Post.where(user_id: @user.id,status: 0)
+    @posts = Post.where(user_id: @user.id,status: 0).page(params[:page])
   end
 
   def edit
@@ -50,12 +50,12 @@ class Public::UsersController < ApplicationController
   def favorites
       @user = User.find(params[:id])
       favorites= Favorite.where(user_id: @user.id).pluck(:post_id)
-      @favorite_posts = Post.find(favorites)
+      @favorite_posts = Post.where(id: favorites).page(params[:page])
   end
 
   def drafts
       @user = User.find(params[:id])
-      @posts = Post.where(user_id: @user.id,status: 1)
+      @posts = Post.where(user_id: @user.id,status: 1).page(params[:page])
   end
 
   def notifications
