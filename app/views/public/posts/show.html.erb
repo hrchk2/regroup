@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row mt-3">
-      <div class="col-6 offset-3 d-flex align-items-center ">
+      <div class="col-10 offset-1 col-sm-6 offset-sm-3 d-flex align-items-center ">
         <h1><%= @post.title %></h1>
         <% if @post.user == current_user %>
           <h2>
@@ -14,15 +14,17 @@
               </p>
             <% end %>
           <% else %>
+           <% unless current_user.name == "guestuser" %>
            <h2 id="post_<%= @post.id %>">
                <%= render "public/favorites/favorite", post: @post%>
            </h2>
+           <% end %>
         <% end %>
       </div>
   </div>
 
   <div class="row mt-2">
-      <table class="table table-bordered col-6 offset-3 text-center ">
+      <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center ">
         <thead>
           <tr>
             <th scope="row" colspan="1" class="align-middle">オーナー名</th>
@@ -68,7 +70,7 @@
   </div>
 
   <div class="row mt-2">
-    <div class="col-6 offset-3 border border-primary h-auto" style=" background-color: rgba(0,0,255,.1)">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 border border-primary h-auto" style=" background-color: rgba(0,0,255,.1)">
       <pre class="font-weight-normal"><%= render_with_hashtags(@post.body) %></pre>
     </div>
   </div>
@@ -78,7 +80,9 @@
   </div>
   
   <div id="comments_form" class="row mt-4">
+    <% unless current_user.name == "guestuser" %>
     <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+    <% end %>
   </div>
 
   <div id="comments_ajax" class="row mt-4">
@@ -86,9 +90,9 @@
   </div>
 
   <div class="row mt-2">
-    <div class="col-6 offset-3">
-      <!--閲覧者用　userが同じでない　または　キャパが０でない場合-->
-      <% unless (@post.user == current_user) || (@post.capacity == 0) %>
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mb-5">
+      <!--閲覧者用　オーナーでない　または　キャパが０でない場合-->
+      <% unless (@post.user == current_user) || (@post.capacity == 0) || (current_user.name == "guestuser") %>
         <!--申請の有無-->
         <h3>申請状況</h3>
         <% if @post.join?(current_user) %>

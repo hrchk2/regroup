@@ -2,15 +2,18 @@
   <div class="row vh-100">
     <div class='mx-auto col-11 col-sm-10 col-lg-8 col-xl-6 text-center'>
       <h1 class="mt-5">welcome to <strong>Re:group</strong>!!</h1>
-      <p>In  <strong>$$$$$$$$$$</strong></strong>, </p>
-      <p>$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$</p>
-      <p> $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$</p>
+      <p><strong>Re:group</strong>は、</p>
+      <p>ゲームのパーティー募集や情報交換を目的としたサイトです。</p>
+      <p>お気軽にお使いください。</p>
       <div class="btn-wrapper col-10 mx-auto">
         <div class="row">
-          <%= link_to 'Log in',new_user_session_path, class: "btn btn-warning btn-sm btn-block mb-3 sign_in" %>
+          <%= link_to 'ゲストログイン',users_guest_sign_in_path,method: :post, class: "btn btn-dark btn-sm btn-block mb-3 sign_in" %>
         </div>
         <div class="row">
-          <%= link_to 'Sign up',new_user_registration_path, class: "btn btn-success btn-sm btn-block sign_up" %>
+          <%= link_to 'ログイン',new_user_session_path, class: "btn btn-light btn-sm btn-block mb-3 sign_in" %>
+        </div>
+        <div class="row">
+          <%= link_to 'サインアップ',new_user_registration_path, class: "btn btn-success btn-sm btn-block sign_up" %>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row mt-3">
-    <div class="col-6 offset-3 mt-3 mb-2">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-3 mb-2">
       <h1><%= @another_entry.user.name %>さんとのDM</h1>
     </div>
   </div>
     
   <div class="row mt-3">
-    <div class="col-6 offset-3 border border-primary  h-50">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 border border-primary  h-50">
       <% if @messages.present? %>
         <% @messages.each do |m| %>
         <div class="d-flex mt-2 align-items-center">
@@ -21,17 +21,17 @@
   </div>
   
   <div class="row">
-    <div class="col-6 offset-3 text-danger mt-3">
-      <%= flash[:error] %>
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 text-danger mt-3">
+      <%= flash[:dm_error] %>
     </div>
   </div>
       
   <div class="row">
-    <div class="col-6 offset-3 mt-3">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-3">
       <%= form_with model:@message do |f| %>
         <%= f.text_area :body, placeholder: "メッセージを入力して下さい", size: "40x3" , class:"form-control " %>
         <%= f.hidden_field :room_id, value: @room.id %>
-        <%= f.submit "投稿",class: 'btn-sm btn-primary float-right'%>
+        <%= f.submit "投稿",class: 'btn-sm btn-primary float-right mt-3'%>
       <% end %>
 
     </div>

@@ -1,6 +1,6 @@
 class Public::PostsController < ApplicationController
   before_action :ensure_correct_user, only: [:edit,:update,:destroy]
-  before_action :ensure_guest_user, only: [:edit,:update,:destroy]
+  before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   
   
   def new
@@ -80,13 +80,15 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @user = @post.user
     unless  @user == current_user
-      redirect_to posts_path, notice: 'ユーザーが正しくありません。'
+       flash[:post_notice] =  'ユーザーが正しくありません。'
+      redirect_to posts_path
     end
   end
   
   def ensure_guest_user
     if  current_user.name == "guestuser"
-      redirect_to posts_path, notice: 'ゲストユーザーは遷移できません。'
+      flash[:post_notice] =  'ゲストユーザーは遷移できません。'
+      redirect_to posts_path
     end
   end
 

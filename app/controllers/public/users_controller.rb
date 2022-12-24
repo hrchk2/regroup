@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications]
-  before_action :ensure_guest_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications]
+  before_action :ensure_guest_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications,:favorites]
 
   def show
     @user = User.find(params[:id])
@@ -83,7 +83,7 @@ class Public::UsersController < ApplicationController
   def ensure_correct_user
     @user = User.find(params[:id])
     unless  @user == current_user
-      flash[:error]= "ユーザーが正しくありません。"
+      flash[:user_error]= "ユーザーが正しくありません。"
       redirect_to user_path(current_user)
     end
   end
@@ -92,7 +92,8 @@ class Public::UsersController < ApplicationController
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.name == "guestuser"
-      redirect_to user_path(current_user) , error: 'ゲストユーザーは遷移できません。'
+       flash[:user_error]= 'ゲストユーザーは遷移できません。'
+      redirect_to user_path(current_user)
     end
   end
 
