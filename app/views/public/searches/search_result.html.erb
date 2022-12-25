@@ -7,8 +7,9 @@
 
   <div class="row mt-2">
       <% if @range == "Tag" %>
-
-       <% @posts.each do |post| %>
+        
+        <% unless @posts.nil? %>
+          <% @posts.each do |post|%>  
             <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center">
               <thead>
                 <tr>
@@ -64,17 +65,16 @@
                   <% end %>
                 </tr>
               </tbody>
-              
+
           </tbody>
         </table>
               <% end %>
-            
-            
+          
             <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
               <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
             </div>
-            
-            
+          <%end%>
+
       <% else %>
 
         <% @posts.each do |post| %>
@@ -135,7 +135,7 @@
               </tbody>
             <% end %>
           </table>
-            
+
               <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
                 <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
               </div>

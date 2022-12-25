@@ -85,9 +85,9 @@ ActiveRecord::Schema.define(version: 2022_12_20_095752) do
   create_table "participants", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "post_id", null: false
+    t.integer "approval_status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "approval_status", default: 0, null: false
   end
 
   create_table "post_tags", force: :cascade do |t|
