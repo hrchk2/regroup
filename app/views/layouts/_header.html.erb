@@ -4,9 +4,9 @@
     <button class="navbar-toggler my-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
+  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
+  
       <% if user_signed_in? %>
         <%= form_with url: search_path, local: true, method: :get,class: "form-row ml-auto" do |f| %>
         <%= f.text_field :word,class: "form-control col-5 mr-1", value: params[:word] %>
@@ -22,7 +22,7 @@
         <%= f.submit "Search", class: "btn btn-outline-success col-2" %>
         <% end %>
       <% end %>
-
+  
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
           <li class="nav-item active">
@@ -35,9 +35,9 @@
             <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link mt-lg-3" %>
           </li>
           <li class="nav-item">
-             <%= link_to user_path(current_user) do %>
-             <%= image_tag current_user.get_profile_image, size:'75x75',class:"rounded-circle nav-link" %>
-             <% end %>
+            <%= link_to user_path(current_user) do %>
+              <%= image_tag current_user.get_profile_image, size:'75x75',class:"rounded-circle nav-link" %>
+            <% end %>
           </li>
         <% elsif admin_signed_in? %>
           <li class="nav-item active">
@@ -71,7 +71,5 @@
         <% end %>
       </ul>
     </div>
-
   </div>
 </nav>
-

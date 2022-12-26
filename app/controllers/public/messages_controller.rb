@@ -1,13 +1,13 @@
 class Public::MessagesController < ApplicationController
 
   def create
-      message = current_user.messages.new(message_params)
-      if message.save
-         redirect_to room_path(message.room)
-      else
-        flash[:dm_error] = "２文字以上入力してください。"
-        redirect_to request.referer
-      end
+    message = current_user.messages.new(message_params)
+    if message.save
+       redirect_to room_path(message.room)
+    else
+      flash[:dm_error] = "２文字以上入力してください。"
+      redirect_to request.referer
+    end
   end
 
   private

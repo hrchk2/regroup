@@ -1,72 +1,72 @@
 <div class="container">
   <div class="row mt-3">
-      <div class="col-10 offset-1 col-sm-6 offset-sm-3 d-flex align-items-center ">
-        <h1><%= @post.title %></h1>
-        <% if @post.user == current_user %>
-          <h2>
-            <%= link_to edit_post_path(@post),class:"text-muted" do%>
-             <i class="far fa-edit fa-xs ml-5"></i>
-             <% end %>
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 d-flex align-items-center ">
+      <h1><%= @post.title %></h1>
+      <% if @post.user == current_user %>
+        <h2>
+          <%= link_to edit_post_path(@post),class:"text-muted" do%>
+            <i class="far fa-edit fa-xs ml-5"></i>
+          <% end %>
+        </h2>
+          <% if @post.status == "下書き" %>
+            <p class="text-muted ml-3 pt-3">
+              ※下書き
+            </p>
+          <% end %>
+      <% else %>
+          <% unless current_user.name == "guestuser" %>
+          <h2 id="post_<%= @post.id %>">
+            <%= render "public/favorites/favorite", post: @post%>
           </h2>
-            <% if @post.status == "下書き" %>
-              <p class="text-muted ml-3 pt-3">
-                  ※下書き
-              </p>
-            <% end %>
-          <% else %>
-           <% unless current_user.name == "guestuser" %>
-           <h2 id="post_<%= @post.id %>">
-               <%= render "public/favorites/favorite", post: @post%>
-           </h2>
-           <% end %>
-        <% end %>
-      </div>
+          <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class="row mt-2">
-      <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center ">
-        <thead>
-          <tr>
-            <th scope="row" colspan="1" class="align-middle">オーナー名</th>
-            <td colspan="2" >
-              <%= link_to user_path(@post.user) do %>
-                <%= image_tag @post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
-                <%= @post.user.name %>
-              <% end %>
-            </td>
-          </tr>
-        </thead>
-        <thead>
-          <tr>
-            <th scope="col">募集人数</th>
-            <th scope="col">参加型</th>
-            <th scope="col">募集状況</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <% if @post.capacity == 0 %>
-              <td> 参加制限なし </td>
-            <% else %>
-              <td><%= @join.count %>/<%= @post.capacity %>人</td>
+    <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center ">
+      <thead>
+        <tr>
+          <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+          <td colspan="2" >
+            <%= link_to user_path(@post.user) do %>
+              <%= image_tag @post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+              <%= @post.user.name %>
             <% end %>
+          </td>
+        </tr>
+      </thead>
+      <thead>
+        <tr>
+          <th scope="col">募集人数</th>
+          <th scope="col">参加型</th>
+          <th scope="col">募集状況</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% if @post.capacity == 0 %>
+            <td> 参加制限なし </td>
+          <% else %>
+            <td><%= @join.count %>/<%= @post.capacity %>人</td>
+          <% end %>
 
-            <!--自由参加または承認制のif文-->
-            <% if @post.is_free? %>
-              <td class="text-primary">自由参加</td>
-                <% else %>
-              <td class="text-waring">オーナー承認制</td>
-            <% end %>
+          <!--自由参加または承認制のif文-->
+          <% if @post.is_free? %>
+            <td class="text-primary">自由参加</td>
+              <% else %>
+            <td class="text-waring">オーナー承認制</td>
+          <% end %>
 
-            <!--募集関係　if-->
-            <% if @post.is_stop? %>
-              <td class="text-danger">募集停止</td>
-                <% else %>
-              <td class="text-success">募集中</td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
+          <!--募集関係　if-->
+          <% if @post.is_stop? %>
+            <td class="text-danger">募集停止</td>
+              <% else %>
+            <td class="text-success">募集中</td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="row mt-2">
@@ -81,7 +81,7 @@
   
   <div id="comments_form" class="row mt-4">
     <% unless current_user.name == "guestuser" %>
-    <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
+      <%= render partial:"public/comments/form", locals: {post: @post,comment: @comment} %>
     <% end %>
   </div>
 
@@ -96,22 +96,22 @@
         <!--申請の有無-->
         <h3>申請状況</h3>
         <% if @post.join?(current_user) %>
-           <% if @member.approval_status == "参加中" %>
-              <p>参加中</p>
-              <%= link_to "キャンセルする",participant_path(@member),method: :delete %>
-           <% elsif @member.approval_status == "キャンセル待ち" %>
-              <p>キャンセル待ち</p>
-              <%= link_to "申請を取り下げる",participant_path(@member),method: :delete %>
-           <% else @member.approval_status == "参加申請中" %>
-              <p>参加申請中</p>
-              <%= link_to "申請を取り下げる",participant_path(@member),method: :delete %>
-           <% end %>
+          <% if @member.approval_status == "参加中" %>
+            <p>参加中</p>
+            <%= link_to "キャンセルする",participant_path(@member),method: :delete %>
+          <% elsif @member.approval_status == "キャンセル待ち" %>
+            <p>キャンセル待ち</p>
+            <%= link_to "申請を取り下げる",participant_path(@member),method: :delete %>
+          <% else @member.approval_status == "参加申請中" %>
+            <p>参加申請中</p>
+            <%= link_to "申請を取り下げる",participant_path(@member),method: :delete %>
+          <% end %>
         <% else %>
-            <%= form_with model: @participant do |f| %>
-              <%= f.hidden_field :post_id, value: @post.id %>
-              <%= f.hidden_field :user_id, value: current_user.id %>
-              <%= f.submit "申請", class:"btn btn-primary btn-lg user-show-chat" %>
-            <% end %>
+          <%= form_with model: @participant do |f| %>
+            <%= f.hidden_field :post_id, value: @post.id %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.submit "申請", class:"btn btn-primary btn-lg user-show-chat" %>
+          <% end %>
         <% end %>
       <% end %>
       
@@ -127,13 +127,13 @@
       
       <!--オーナー用　userが同じかつキャンセル待ちがある場合-->
       <% if (@post.user ==current_user) && @wait.exists? %>
-       <h3>キャンセル待ち一覧</h3>
-       <% @wait.each do |wait| %>
+        <h3>キャンセル待ち一覧</h3>
+        <% @wait.each do |wait| %>
           <%= wait.user.name %>さん
           <%= link_to "許可",participant_permit_path(wait),method: :patch,class:"btn btn-primary ml-3" %>
         <% end %>
       <% end %>
     </div> 
   </div>
+  
 </div>
-

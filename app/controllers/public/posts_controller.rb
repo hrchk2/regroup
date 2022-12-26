@@ -2,7 +2,6 @@ class Public::PostsController < ApplicationController
   before_action :ensure_correct_user, only: [:edit,:update,:destroy]
   before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   
-  
   def new
     @post = Post.new
   end

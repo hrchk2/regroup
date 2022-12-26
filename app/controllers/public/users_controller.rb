@@ -48,22 +48,22 @@ class Public::UsersController < ApplicationController
   end
 
   def favorites
-      @user = User.find(params[:id])
-      favorites= Favorite.where(user_id: @user.id).pluck(:post_id)
-      @favorite_posts = Post.where(id: favorites).page(params[:page])
+    @user = User.find(params[:id])
+    favorites= Favorite.where(user_id: @user.id).pluck(:post_id)
+    @favorite_posts = Post.where(id: favorites).page(params[:page])
   end
 
   def drafts
-      @user = User.find(params[:id])
-      @posts = Post.where(user_id: @user.id,status: 1).page(params[:page])
+    @user = User.find(params[:id])
+    @posts = Post.where(user_id: @user.id,status: 1).page(params[:page])
   end
 
   def notifications
-      @posts =  @user.posts.includes(:participants).distinct
-      @new_posts = @posts.where(participants: {approval_status: 0})
-      @new_posts_paticipants_count = @new_posts.group(:post_id).count.values.sum
-      @cancel_posts = @posts.where(participants: {approval_status: 2})
-      @cancel_posts_paticipants_count = @cancel_posts.group(:post_id).count.values.sum
+    @posts =  @user.posts.includes(:participants).distinct
+    @new_posts = @posts.where(participants: {approval_status: 0})
+    @new_posts_paticipants_count = @new_posts.group(:post_id).count.values.sum
+    @cancel_posts = @posts.where(participants: {approval_status: 2})
+    @cancel_posts_paticipants_count = @cancel_posts.group(:post_id).count.values.sum
   end
 
   private
