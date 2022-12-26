@@ -6,141 +6,16 @@
   </div>
 
   <div class="row mt-2">
-      <% if @range == "Tag" %>
-        
-        <% unless @posts.nil? %>
-          <% @posts.each do |post|%>  
-            <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center">
-              <thead>
-                <tr>
-                  <th colspan="3">
-                    <%=link_to post.title,post_path(post),class:"text-dark" %>
-
-                    <!--付いているタグのeach-->
-                    <% post.tags.each do |tag| %>
-                       <%=link_to "#""#{tag.name}","/posts/tag/#{tag.name}" %>
-                    <% end %>
-
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row" colspan="1" class="align-middle">オーナー名</th>
-                  <td colspan="2" >
-                    <%= link_to user_path(post.user) do %>
-                      <%= image_tag post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
-                      <%= post.user.name %>
-                    <% end %>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <th scope="col">募集人数</th>
-                  <th scope="col">参加型</th>
-                  <th scope="col">募集状況</th>
-                </tr>
-              </body>
-              <tbody>
-                <tr>
-                  <% if post.capacity == 0 %>
-                    <td> 参加制限なし </td>
-                  <% else %>
-                    <td><%= post.participants.where(approval_status: 1).count %>/<%= post.capacity %>人</td>
-                  <% end %>
-
-                  <!--自由参加または承認制のif文-->
-                  <% if post.is_free? %>
-                    <td class="text-primary">自由参加</td>
-                      <% else %>
-                    <td class="text-waring">オーナー承認制</td>
-                  <% end %>
-
-                  <!--募集関係　if-->
-                  <% if post.is_stop? %>
-                    <td class="text-danger">募集停止</td>
-                      <% else %>
-                    <td class="text-success">募集中</td>
-                  <% end %>
-                </tr>
-              </tbody>
-
-          </tbody>
-        </table>
-              <% end %>
-          
-            <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
-              <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
-            </div>
-          <%end%>
-
-      <% else %>
-
-        <% @posts.each do |post| %>
-          <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center">
-              <thead>
-                <tr>
-                  <th colspan="3">
-                    <%=link_to post.title,post_path(post),class:"text-dark" %>
-
-                    <!--付いているタグのeach-->
-                    <% post.tags.each do |tag| %>
-                       <%=link_to "#""#{tag.name}","/posts/tag/#{tag.name}" %>
-                    <% end %>
-
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row" colspan="1" class="align-middle">オーナー名</th>
-                  <td colspan="2" >
-                    <%= link_to user_path(post.user) do %>
-                      <%= image_tag post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
-                      <%= post.user.name %>
-                    <% end %>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <th scope="col">募集人数</th>
-                  <th scope="col">参加型</th>
-                  <th scope="col">募集状況</th>
-                </tr>
-              </body>
-              <tbody>
-                <tr>
-                 <% if post.capacity == 0 %>
-                  <td> 参加制限なし </td>
-                <% else %>
-                  <td><%= post.participants.where(approval_status: 1).count %>/<%= post.capacity %>人</td>
-                <% end %>
-
-                  <!--自由参加または承認制のif文-->
-                  <% if post.is_free? %>
-                    <td class="text-primary">自由参加</td>
-                      <% else %>
-                    <td class="text-waring">オーナー承認制</td>
-                  <% end %>
-
-                  <!--募集関係　if-->
-                  <% if post.is_stop? %>
-                    <td class="text-danger">募集停止</td>
-                      <% else %>
-                    <td class="text-success">募集中</td>
-                  <% end %>
-                </tr>
-              </tbody>
-            <% end %>
-          </table>
-
-              <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
-                <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
-              </div>
-
-      <% end %>
+    <% if @range == "Tag" %>
+        <%= render "public/posts/index", posts: @tag_posts %>
+        <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
+          <%= paginate @tag_posts, theme: 'twitter-bootstrap-4' %>
+        </div>
+    <% else %>
+        <%= render "public/posts/index", posts: @posts %>
+        <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
+          <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
+        </div>
+    <% end %>
   </div>
-
 </div>

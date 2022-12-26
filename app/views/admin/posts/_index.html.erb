@@ -1,0 +1,69 @@
+<% posts.each do |post| %>
+      <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center">
+          <thead>
+            <tr>
+              <th colspan="4">
+                <%=link_to post.title,admin_post_path(post),class:"text-dark" %>
+
+                <!--付いているタグのeach-->
+                <% post.tags.each do |tag| %>
+                  <%=link_to "#""#{tag.name}","/admin/posts/tag/#{tag.name}" %>
+                <% end %>
+
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" colspan="1" class="align-middle">オーナー名</th>
+              <td colspan="3" >
+                <%= link_to admin_user_path(post.user) do %>
+                  <%= image_tag post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
+                  <%= post.user.name %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <th scope="col">募集人数</th>
+              <th scope="col">参加型</th>
+              <th scope="col">募集状況</th>
+              <th scope="col">ステータス</th>
+            </tr>
+          </body>
+          <tbody>
+            <tr>
+              <% if post.capacity == 0 %>
+                <td> 募集制限なし </td>
+              <% else %>
+                <td><%= post.participants.where(approval_status: 1).count %>/<%= post.capacity %>人</td>
+              <% end %>
+
+              <!--自由参加または承認制のif文-->
+              <% if post.is_free? %>
+                <td class="text-primary">自由参加</td>
+                  <% else %>
+                <td class="text-waring">オーナー承認制</td>
+              <% end %>
+
+              <!--募集関係　if-->
+              <% if post.is_stop? %>
+                <td class="text-danger">募集停止</td>
+                  <% else %>
+                <td class="text-success">募集中</td>
+              <% end %>
+
+              <% if post.status == "公開" %>
+                <td class="text-success">公開</td>
+                  <% else %>
+                <td class="text-secondary">下書き</td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+  
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
+      <%= paginate posts, theme: 'twitter-bootstrap-4' %>
+    </div>

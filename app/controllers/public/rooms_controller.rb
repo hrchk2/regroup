@@ -1,6 +1,6 @@
 class Public::RoomsController < ApplicationController
   
-  before_action :ensure_correct_user, only: [:index,:create,:show]
+  before_action :ensure_correct_user, only: [:index,:show]
   before_action :ensure_guest_user, only: [:index,:create,:show]
 
   def index
@@ -33,7 +33,7 @@ class Public::RoomsController < ApplicationController
   def ensure_correct_user
     @room = Room.find(params[:id])
     @entry = @room.entries.find_by(user_id: current_user.id)
-    unless @entry.user == current_user
+    if @entry.nil?
       redirect_to user_path(current_user), notice: 'ユーザーが正しくありません。'
     end
   end

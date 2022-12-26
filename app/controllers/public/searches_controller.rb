@@ -2,19 +2,14 @@ class Public::SearchesController < ApplicationController
 
   def search
     @range = params[:range]
+    @posts= Post.where(status: 0)
 
     if @range == "Tag"
-      @tags = Tag.looks(params[:search], params[:word])
-      @tags.each do |tag|
-        @posts = tag.posts.where(status: 0).page(params[:page])
-      end
-      render "public/searches/search_result"
+      @tag_posts = @posts.looks(params[:search], params[:word], params[:range]).page(params[:page])
     else
-      @posts_all = Post.looks(params[:search], params[:word])
-      # 下書きは排除
-      @posts = @posts_all.where(status: 0).page(params[:page])
-      render "public/searches/search_result"
+      @posts = @posts.looks(params[:search], params[:word], params[:range]).page(params[:page])
     end
+      render "public/searches/search_result"
   end
 
 end

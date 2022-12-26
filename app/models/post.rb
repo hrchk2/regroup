@@ -52,7 +52,7 @@ class Post < ApplicationRecord
       else
         self
       end
-    elsif range == "Tag"
+    else
       if search == "perfect_match"
         tags = Tag.where("name LIKE?", "#{word}")
       elsif search == "forward_match"
@@ -65,8 +65,6 @@ class Post < ApplicationRecord
         tags = Tag.all
       end
       self.includes(:post_tags).where(post_tags: {tag_id: tags})
-    else
-      self
     end
   end
 

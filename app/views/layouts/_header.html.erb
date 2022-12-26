@@ -8,18 +8,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
       <% if user_signed_in? %>
-        <%= "TODO: 下のフォームを真似して選択済みの所に値を入れる" %>
         <%= form_with url: search_path, local: true, method: :get,class: "form-row ml-auto" do |f| %>
-        <%= f.text_field :word,class: "form-control col-5 mr-1"  %>
-        <%= f.select :range, options_for_select([['Tag'], ['Post']]),{},class: "col-2 mr-1" %>
-        <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]),{},class: "col-2 mr-1" %>
+        <%= f.text_field :word,class: "form-control col-5 mr-1", value: params[:word] %>
+        <%= f.select :range, options_for_select([['Tag'], ['Post']], params[:range]),{},class: "col-2 mr-1" %>
+        <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]], params[:search]),{},class: "col-2 mr-1" %>
         <%= f.submit "Search", class: "btn btn-outline-success col-2" %>
         <% end %>
       <% elsif admin_signed_in?%>
         <%= form_with url: admin_search_path, local: true, method: :get,class: "form-row ml-auto" do |f| %>
         <%= f.text_field :word,class: "form-control col-5 mr-1", value: params[:word] %>
-        <%= f.select :range, options_for_select([['Tag'], ['Post']], params[:range]),{include_blank: true},class: "col-2 mr-1" %>
-        <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]], params[:search]), {include_blank: true}, class: "col-2 mr-1" %>
+        <%= f.select :range, options_for_select([['Tag'], ['Post']], params[:range]),{},class: "col-2 mr-1" %>
+        <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]], params[:search]), {}, class: "col-2 mr-1" %>
         <%= f.submit "Search", class: "btn btn-outline-success col-2" %>
         <% end %>
       <% end %>
