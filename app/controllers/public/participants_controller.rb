@@ -4,7 +4,7 @@ class Public::ParticipantsController < ApplicationController
     participant = Participant.new(participant_params)
     post = participant.post
     if  post.is_free == true
-        participant.approval_status = 0
+        participant.approval_status = 1
         participant.save
         redirect_to post_path(participant.post)
     else
@@ -12,7 +12,7 @@ class Public::ParticipantsController < ApplicationController
         redirect_to post_path(participant.post)
     end
   end
-  
+
   def destroy
     participant = Participant.find(params[:id])
     participant.destroy
