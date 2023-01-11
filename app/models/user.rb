@@ -49,6 +49,11 @@ class User < ApplicationRecord
       user.name = "guestuser"
     end
   end
+  
+  # ゲストかどうか？の
+  def guest?
+    name == "guestuser"
+  end
 
   # is_deletedがfalseならtrueを返すようにしている
   def active_for_authentication?

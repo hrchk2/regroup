@@ -69,6 +69,12 @@ class Post < ApplicationRecord
   end
 
   def join?(user)
-      participants.where(user_id: user.id).exists?
+    participants.where(user_id: user.id).exists?
   end
+  
+  # current_userが投稿したか？
+  def is_posted_by?(current_user)
+    user == current_user
+  end
+  
 end
