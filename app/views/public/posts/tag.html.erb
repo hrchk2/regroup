@@ -21,10 +21,6 @@
 
   <div class="row mt-2">
     <%= render "public/posts/index", posts: @posts %>
-    
-    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
-      <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
-    </div>
   </div>
 </div>
 <% end %>
