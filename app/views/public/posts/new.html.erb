@@ -1,64 +1,12 @@
 <div class="container">
-  <div class="row">
-    <div class="col-10 offset-1 col-sm-6 offset-sm-3  mt-3 mb-2 ">
+  <div class="row mt-3">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-3 mb-2 ">
       <h1>新規投稿</h1>
+    </div>
+    
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-2">
       <%= render 'layouts/errors', obj: @post %>
-    </div>
-  </div>
-
-  <%= form_with model:@post,local:true do |f| %>
-    <div class="row">
-      <div class="col-10 offset-1 col-sm-6 offset-sm-3  form-group">
-        <%= f.label :title,"タイトル"%>
-        <%= f.text_field :title,class:"form-control" %>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group col-10 offset-1 col-sm-6 offset-sm-3 ">
-        <%= f.label :body,"募集内容" %>
-        <%= f.text_area :body,class:"form-control",rows: 20 %>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group col-10 offset-1 col-sm-6 offset-sm-3 ">
-        <%= f.label :capacity,"参加人数" %>
-        <%= f.select :capacity, capacity_select %>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group col-10 offset-1 col-sm-6 offset-sm-3  ">
-          <%= f.label :"参加設定" %>
-        <div class="form-check">
-          <%= f.radio_button :is_free, true %>
-          <%= f.label :is_free_true, "自由参加" %>
-          <%= f.radio_button :is_free, false%>
-          <%= f.label :is_free_false, "オーナー承認制"%>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group col-10 offset-1 col-sm-6 offset-sm-3 ">
-          <%= f.label :"公開範囲" %>
-        <div class="form-check">
-          <%= f.radio_button :status, Post.statuses.key(0) %>
-          <%= f.label :status_公開, "公開"%>
-          <%= f.radio_button :status,Post.statuses.key(1) %>
-          <%= f.label :status_下書き, "下書き"  %>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group col-10 offset-1 col-sm-6 offset-sm-3  d-flex justify-content-center">
-        <%= f.submit "投稿する",class: 'btn btn-success btn-lg btn-block' %>
-      </div>
-    <% end %>
-    </div>
-
+      <%= render "public/posts/form", post: @post %>
     </div>
   </div>
 </div>

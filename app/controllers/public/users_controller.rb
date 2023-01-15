@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
-  before_action :ensure_correct_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications]
-  before_action :ensure_guest_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications,:favorites]
+  before_action :ensure_correct_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications,:joinings]
+  before_action :ensure_guest_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications,:favorites,:joinings]
 
   def show
     @user = User.find(params[:id])
@@ -25,7 +25,6 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
@@ -37,7 +36,6 @@ class Public::UsersController < ApplicationController
   end
 
   def quit
-    @user = User.find(params[:id])
   end
 
   def withdraw
@@ -54,7 +52,6 @@ class Public::UsersController < ApplicationController
   end
 
   def drafts
-    @user = User.find(params[:id])
     @posts = Post.where(user_id: @user.id,status: 1).page(params[:page])
   end
 
@@ -64,6 +61,11 @@ class Public::UsersController < ApplicationController
     @new_posts_paticipants_count = @new_posts.group(:post_id).count.values.sum
     @cancel_posts = @posts.where(participants: {approval_status: 2})
     @cancel_posts_paticipants_count = @cancel_posts.group(:post_id).count.values.sum
+  end
+  
+  def joinings
+    @posts = Post.includes(:participants).distinct
+    @joining_posts = @posts.where(participants: {user_id: @user,approval_status: 1}).page(params[:page])
   end
 
   private

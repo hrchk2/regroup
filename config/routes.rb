@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get :favorites
         get :drafts
         get :notifications
+        get :joinings
         end
         resource :relationships, only: [:create, :destroy]
         get "following" => "relationships#following"
