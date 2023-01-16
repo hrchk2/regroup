@@ -23,7 +23,7 @@ Rails.application.routes.draw do
         member do
         get :favorites
         get :drafts
-        get :notifications
+        get :managements
         get :joinings
         end
         resource :relationships, only: [:create, :destroy]

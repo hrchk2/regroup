@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-3 mb-2 ">
+        <h1>申請許可待ち一覧</h1>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <% if @new_posts_paticipants_count > 0 %>
+      <%= render "public/users/managements", posts: @new_posts %>
+      <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
+        <%= paginate @new_posts,param_name: 'new_posts_page', theme: 'twitter-bootstrap-4' %>
+      </div>
+    <% else %>
+      <div class="col-10 offset-1 col-sm-6 offset-sm-3 text-center">
+        <p>申請中は、ありません。</p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-3 mb-2 ">
+      <h1>キャンセル待ち一覧</h1>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <% if @cancel_posts_paticipants_count > 0 %>
+      <%= render "public/users/managements", posts: @cancel_posts %>
+      <div class="col-10 offset-1 col-sm-6 offset-sm-3 mt-2 mb-3 d-flex justify-content-center ">
+        <%= paginate @cancel_posts,param_name: 'cancel_posts_page', theme: 'twitter-bootstrap-4' %>
+      </div>
+    <% else %>
+      <div class="col-10 offset-1 col-sm-6 offset-sm-3 text-center">
+        <p>キャンセル待ちは、ありません。</p>
+      </div>
+    <% end %>
+  </div>
+</div>

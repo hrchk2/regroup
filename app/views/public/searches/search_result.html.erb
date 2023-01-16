@@ -6,10 +6,12 @@
   </div>
 
   <div class="row mt-2">
-    <% if @range == "Tag" %>
+    <% if @range == "Tag" && @tag_posts.any? %>
       <%= render "public/posts/index", posts: @tag_posts %>
-    <% else %>
+    <% elsif @range == "Post" && @posts.any? %>
       <%= render "public/posts/index", posts: @posts %>
+    <% else %>
+      <p class="mx-auto">検索結果はありません。</p>
     <% end %>
   </div>
 </div>

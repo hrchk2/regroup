@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
-  before_action :ensure_correct_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications,:joinings]
-  before_action :ensure_guest_user, only: [:edit,:update,:quit,:withdraw,:drafts,:notifications,:favorites,:joinings]
+  before_action :ensure_correct_user, only: [:edit,:update,:quit,:withdraw,:drafts,:managements,:joinings]
+  before_action :ensure_guest_user, only: [:edit,:update,:quit,:withdraw,:drafts,:managements,:favorites,:joinings]
 
   def show
     @user = User.find(params[:id])
@@ -55,11 +55,11 @@ class Public::UsersController < ApplicationController
     @posts = Post.where(user_id: @user.id,status: 1).page(params[:page])
   end
 
-  def notifications
+  def managements
     @posts =  @user.posts.includes(:participants).distinct
-    @new_posts = @posts.where(participants: {approval_status: 0})
+    @new_posts = @posts.where(participants: {approval_status: 0}).page(params[:new_posts_page])
     @new_posts_paticipants_count = @new_posts.group(:post_id).count.values.sum
-    @cancel_posts = @posts.where(participants: {approval_status: 2})
+    @cancel_posts = @posts.where(participants: {approval_status: 2}).page(params[:cancel_posts_page])
     @cancel_posts_paticipants_count = @cancel_posts.group(:post_id).count.values.sum
   end
   

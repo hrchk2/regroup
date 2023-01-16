@@ -24,49 +24,7 @@
   </div>
 
   <div class="row mt-2">
-    <table class="table table-bordered col-10 offset-1 col-sm-6 offset-sm-3 text-center ">
-      <thead>
-        <tr>
-          <th scope="row" colspan="1" class="align-middle">オーナー名</th>
-          <td colspan="2" >
-            <%= link_to user_path(@post.user) do %>
-              <%= image_tag @post.user.get_profile_image, size:'50x50',class:"rounded-circle" %>
-              <%= @post.user.name %>
-            <% end %>
-          </td>
-        </tr>
-      </thead>
-      <thead>
-        <tr>
-          <th scope="col">募集人数</th>
-          <th scope="col">参加型</th>
-          <th scope="col">募集状況</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% if @post.capacity == 0 %>
-            <td> 参加制限なし </td>
-          <% else %>
-            <td><%= @join.count %>/<%= @post.capacity %>人</td>
-          <% end %>
-
-          <!--自由参加または承認制のif文-->
-          <% if @post.is_free? %>
-            <td class="text-primary">自由参加</td>
-              <% else %>
-            <td class="text-waring">オーナー承認制</td>
-          <% end %>
-
-          <!--募集関係　if-->
-          <% if @post.is_stop? %>
-            <td class="text-danger">募集停止</td>
-              <% else %>
-            <td class="text-success">募集中</td>
-          <% end %>
-        </tr>
-      </tbody>
-    </table>
+    <%= render partial:"public/posts/show", locals: {post: @post,join: @join} %>
   </div>
 
   <div class="row mt-2">
@@ -91,8 +49,8 @@
 
   <div class="row mt-2">
     <div class="col-10 offset-1 col-sm-6 offset-sm-3 mb-5">
-      <!--閲覧者用　オーナーでない　または　キャパが０でない場合-->
-      <% unless (@post.is_posted_by?(current_user)) || (@post.capacity == 0) || (current_user.guest?) %>
+      <!--閲覧者用　オーナーまたはゲストでない場合-->
+      <% unless (@post.is_posted_by?(current_user)) || (current_user.guest?) %>
         <!--申請の有無-->
         <h3>申請状況</h3>
         <% if @post.join?(current_user) %>
@@ -118,22 +76,34 @@
       <!--オーナー用　userが同じかつ参加申請がある場合-->
       <% if @post.is_posted_by?(current_user) && @participants.exists? %>
         <h3>申請者一覧</h3>
-        <% @participants.each do |part| %>
-          <%= part.user.name %>さん
-          <%= link_to "許可",participant_permit_path(part),method: :patch,class:"btn btn-primary ml-3" %>
-          <%= link_to "拒否",participant_ignore_path(part),method: :patch,class:"btn btn-danger ml-3" %>
-        <% end %>
+          <% @participants.each do |part| %>
+            <table class="table mb-0">
+              <tbody>
+                <tr>
+                  <td><%= part.user.name %>さん</td>
+                  <td><%= link_to "許可",participant_permit_path(part),method: :patch,class:"btn btn-primary" %></td>
+                  <td><%= link_to "拒否",participant_ignore_path(part),method: :patch,class:"btn btn-danger" %></td>
+                </tr>
+              </tbody>
+            </table>
+          <% end %>
       <% end %>
       
       <!--オーナー用　userが同じかつキャンセル待ちがある場合-->
       <% if @post.is_posted_by?(current_user) && @wait.exists? %>
         <h3>キャンセル待ち一覧</h3>
         <% @wait.each do |wait| %>
-          <%= wait.user.name %>さん
-          <%= link_to "許可",participant_permit_path(wait),method: :patch,class:"btn btn-primary ml-3" %>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><%= wait.user.name %>さん</td>
+                <td><%= link_to "許可",participant_permit_path(wait),method: :patch,class:"btn btn-primary ml-3" %></td>
+              </tr>
+            </tbody>
+          </table>
         <% end %>
       <% end %>
+      
     </div> 
   </div>
-  
 </div>
