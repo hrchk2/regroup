@@ -1,4 +1,4 @@
-# "Regroup"
+# Welcome to "Regroup"
 
 ## サイト概要
 ### サイトテーマ
