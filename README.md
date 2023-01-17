@@ -21,7 +21,11 @@
 ・攻略情報の交換など
 
 ## 設計書
-...
+・[ER図](https://drive.google.com/drive/folders/1GmDGojdsuhycY3TE6nJnqT4X1mnrNJ5V)
+
+・テーブル定義書
+
+・
 
 ## 開発環境
 - OS：Linux(CentOS)
