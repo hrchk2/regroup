@@ -41,3 +41,5 @@
 ## 使用素材
 画像使用元
 - [GAHAG](https://gahag.net/)
+
+![](https://komarev.com/ghpvc/?username=hrchk2)
