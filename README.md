@@ -23,7 +23,7 @@
 ## 設計書
 ・ER図:https://drive.google.com/drive/folders/1GmDGojdsuhycY3TE6nJnqT4X1mnrNJ5V
 
-・テーブル定義書
+・テーブル定義書:https://docs.google.com/spreadsheets/d/14fFSvxSwXYoeDW9XPQX-iwu9rj7lR3yGTY9qqDpKab4/edit#gid=1373217982
 
 ・
 
