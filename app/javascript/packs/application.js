@@ -17,3 +17,14 @@ import '@fortawesome/fontawesome-free/js/all'
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+$(document).on('turbolinks:load', function() {
+  $(function() {
+    $('#back a').on('click',function(event){
+      $('body, html').animate({
+        scrollTop:0
+      }, 1000);
+      event.preventDefault();
+    });
+  });
+});
