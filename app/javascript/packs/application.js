@@ -13,18 +13,8 @@ import "popper.js";
 import "bootstrap";
 import "../stylesheets/application" 
 import '@fortawesome/fontawesome-free/js/all'
+import "script.js"
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-
-$(document).on('turbolinks:load', function() {
-  $(function() {
-    $('#back a').on('click',function(event){
-      $('body, html').animate({
-        scrollTop:0
-      }, 1000);
-      event.preventDefault();
-    });
-  });
-});
