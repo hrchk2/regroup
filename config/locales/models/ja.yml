@@ -9,4 +9,5 @@ ja:
         body: 本文
       user:
         name: 名前
-        email: メール
+        email: Eメール
+        password: パスワード
